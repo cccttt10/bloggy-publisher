@@ -5,15 +5,24 @@ import React, { Component } from 'react';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { Dispatch, AnyAction } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
-import { Link } from 'umi';
 import { connect } from 'dva';
 import { StateType } from '@/models/login';
-import LoginComponents from './components/Login';
+import LoginComponents, { TabType } from './components/Login';
 import styles from './style.less';
 import { LoginParamsType } from '@/services/login';
 import { ConnectState } from '@/models/connect';
 
-const { Tab, UserName, Password, Mobile, Captcha, Submit } = LoginComponents;
+const {
+    Tab,
+    RegisterEmail,
+    RegisterPassword,
+    RegisterPhone,
+    RegisterName,
+    RegisterConfirmPassword,
+    LoginEmail,
+    LoginPassword,
+    Submit
+} = LoginComponents;
 
 interface LoginProps {
     dispatch: Dispatch<AnyAction>;
@@ -21,7 +30,7 @@ interface LoginProps {
     submitting?: boolean;
 }
 interface LoginState {
-    type: string;
+    type: TabType;
     autoLogin: boolean;
 }
 
@@ -29,7 +38,7 @@ class Login extends Component<LoginProps, LoginState> {
     loginForm: FormComponentProps['form'] | undefined | null = undefined;
 
     state: LoginState = {
-        type: 'account',
+        type: 'login',
         autoLogin: true
     };
 
@@ -53,7 +62,7 @@ class Login extends Component<LoginProps, LoginState> {
         }
     };
 
-    onTabChange = (type: string) => {
+    onTabChange = (type: TabType) => {
         this.setState({ type });
     };
 
@@ -108,9 +117,9 @@ class Login extends Component<LoginProps, LoginState> {
                     }}
                 >
                     <Tab
-                        key="account"
+                        key="login"
                         tab={formatMessage({
-                            id: 'user-login.login.tab-login-credentials'
+                            id: 'user-login.tab.login'
                         })}
                     >
                         {status === 'error' &&
@@ -122,30 +131,37 @@ class Login extends Component<LoginProps, LoginState> {
                                         'user-login.login.message-invalid-credentials'
                                 })
                             )}
-                        <UserName
-                            name="userName"
+                        <LoginEmail
+                            name="email"
                             placeholder={`${formatMessage({
-                                id: 'user-login.login.userName'
-                            })}: admin or user`}
+                                id: 'user-login.login.email'
+                            })}: 123@abc.com`}
                             rules={[
                                 {
                                     required: true,
                                     message: formatMessage({
-                                        id: 'user-login.userName.required'
+                                        id: 'user-login.login.email.required'
+                                    })
+                                },
+                                {
+                                    // eslint-disable-next-line no-useless-escape
+                                    pattern: /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/,
+                                    message: formatMessage({
+                                        id: 'user-login.login.email.wrong-format'
                                     })
                                 }
                             ]}
                         />
-                        <Password
+                        <LoginPassword
                             name="password"
-                            placeholder={`${formatMessage({
-                                id: 'user-login.login.password'
-                            })}: ant.design`}
+                            placeholder={formatMessage({
+                                id: 'user-login.register.password'
+                            })}
                             rules={[
                                 {
                                     required: true,
                                     message: formatMessage({
-                                        id: 'user-login.password.required'
+                                        id: 'user-login.login.password.required'
                                     })
                                 }
                             ]}
@@ -158,9 +174,9 @@ class Login extends Component<LoginProps, LoginState> {
                         />
                     </Tab>
                     <Tab
-                        key="mobile"
+                        key="register"
                         tab={formatMessage({
-                            id: 'user-login.login.tab-login-mobile'
+                            id: 'user-login.tab.register'
                         })}
                     >
                         {status === 'error' &&
@@ -172,47 +188,100 @@ class Login extends Component<LoginProps, LoginState> {
                                         'user-login.login.message-invalid-verification-code'
                                 })
                             )}
-                        <Mobile
-                            name="mobile"
+                        <RegisterEmail
+                            name="email"
+                            placeholder={`${formatMessage({
+                                id: 'user-login.login.email'
+                            })}: 123@abc.com`}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: formatMessage({
+                                        id: 'user-login.login.email.required'
+                                    })
+                                },
+                                {
+                                    // eslint-disable-next-line no-useless-escape
+                                    pattern: /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/,
+                                    message: 'Wrong email format!'
+                                }
+                            ]}
+                        />
+                        <RegisterName
+                            name="name"
                             placeholder={formatMessage({
-                                id: 'user-login.phone-number.placeholder'
+                                id: 'user-login.register.name'
                             })}
                             rules={[
                                 {
                                     required: true,
                                     message: formatMessage({
-                                        id: 'user-login.phone-number.required'
+                                        id: 'user-login.register.name.required'
                                     })
                                 },
                                 {
-                                    pattern: /^1\d{10}$/,
+                                    pattern: /\S/,
                                     message: formatMessage({
-                                        id: 'user-login.phone-number.wrong-format'
+                                        id: 'user-login.register.name.required'
                                     })
                                 }
                             ]}
                         />
-                        <Captcha
-                            name="captcha"
+                        <RegisterPhone
+                            name="phone"
                             placeholder={formatMessage({
-                                id: 'user-login.verification-code.placeholder'
+                                id: 'user-login.register.phone'
                             })}
-                            countDown={120}
-                            onGetCaptcha={this.onGetCaptcha}
-                            getCaptchaButtonText={formatMessage({
-                                id: 'user-login.form.get-captcha'
-                            })}
-                            getCaptchaSecondText={formatMessage({
-                                id: 'user-login.captcha.second'
+                            rules={[
+                                {
+                                    pattern: /^\d+/,
+                                    message: formatMessage({
+                                        id: 'user-login.register.phone.wrong-format'
+                                    })
+                                }
+                            ]}
+                        />
+                        <RegisterPassword
+                            name="password"
+                            placeholder={formatMessage({
+                                id: 'user-login.register.password'
                             })}
                             rules={[
                                 {
                                     required: true,
                                     message: formatMessage({
-                                        id: 'user-login.verification-code.required'
+                                        id: 'user-login.register.password.required'
                                     })
                                 }
                             ]}
+                            onPressEnter={e => {
+                                e.preventDefault();
+                                if (this.loginForm) {
+                                    this.loginForm.validateFields(this.handleSubmit);
+                                }
+                            }}
+                        />
+
+                        <RegisterConfirmPassword
+                            name="confirmPassword"
+                            placeholder={formatMessage({
+                                id: 'user-login.register.confirmPassword'
+                            })}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: formatMessage({
+                                        id:
+                                            'user-login.register.confirmPassword.required'
+                                    })
+                                }
+                            ]}
+                            onPressEnter={e => {
+                                e.preventDefault();
+                                if (this.loginForm) {
+                                    this.loginForm.validateFields(this.handleSubmit);
+                                }
+                            }}
                         />
                     </Tab>
                     <div>
@@ -227,28 +296,21 @@ class Login extends Component<LoginProps, LoginState> {
                         </a>
                     </div>
                     <Submit loading={submitting}>
-                        <FormattedMessage id="user-login.login.login" />
+                        <FormattedMessage
+                            id={
+                                type === 'login'
+                                    ? 'user-login.login.button'
+                                    : 'user-login.register.button'
+                            }
+                        />
                     </Submit>
                     <div className={styles.other}>
                         <FormattedMessage id="user-login.login.sign-in-with" />
                         <Icon
-                            type="alipay-circle"
+                            type="github"
                             className={styles.icon}
                             theme="outlined"
                         />
-                        <Icon
-                            type="taobao-circle"
-                            className={styles.icon}
-                            theme="outlined"
-                        />
-                        <Icon
-                            type="weibo-circle"
-                            className={styles.icon}
-                            theme="outlined"
-                        />
-                        <Link className={styles.register} to="/user/register">
-                            <FormattedMessage id="user-login.login.signup" />
-                        </Link>
                     </div>
                 </LoginComponents>
             </div>

@@ -10,9 +10,10 @@ import LoginTab from './LoginTab';
 import styles from './index.less';
 import { LoginParamsType } from '@/services/login';
 
+export type TabType = 'login' | 'register';
 export interface LoginProps {
     defaultActiveKey?: string;
-    onTabChange?: (key: string) => void;
+    onTabChange?: (key: TabType) => void;
     style?: React.CSSProperties;
     onSubmit?: (error: unknown, values: LoginParamsType) => void;
     className?: string;
@@ -32,13 +33,19 @@ class Login extends Component<LoginProps, LoginState> {
 
     public static Submit = LoginSubmit;
 
-    public static UserName: React.FunctionComponent<LoginItemProps>;
+    public static LoginEmail: React.FunctionComponent<LoginItemProps>;
 
-    public static Password: React.FunctionComponent<LoginItemProps>;
+    public static LoginPassword: React.FunctionComponent<LoginItemProps>;
 
-    public static Mobile: React.FunctionComponent<LoginItemProps>;
+    public static RegisterEmail: React.FunctionComponent<LoginItemProps>;
 
-    public static Captcha: React.FunctionComponent<LoginItemProps>;
+    public static RegisterPhone: React.FunctionComponent<LoginItemProps>;
+
+    public static RegisterName: React.FunctionComponent<LoginItemProps>;
+
+    public static RegisterPassword: React.FunctionComponent<LoginItemProps>;
+
+    public static RegisterConfirmPassword: React.FunctionComponent<LoginItemProps>;
 
     static defaultProps = {
         className: '',
@@ -71,7 +78,7 @@ class Login extends Component<LoginProps, LoginState> {
             () => {
                 const { onTabChange } = this.props;
                 if (onTabChange) {
-                    onTabChange(type);
+                    onTabChange(type as TabType);
                 }
             }
         );

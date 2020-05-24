@@ -1,7 +1,7 @@
-/**
- * request 网络请求工具
- * 更详细的 api 文档: https://github.com/umijs/umi-request
- */
+/*
+request middleware is based on umi-request
+documentation: https://github.com/umijs/umi-request
+*/
 import { extend } from 'umi-request';
 import { notification } from 'antd';
 
@@ -23,13 +23,17 @@ const codeMessage = {
     504: '网关超时。'
 };
 
-/**
- * 异常处理程序
- */
-const errorHandler = (error: { response: Response }): Response => {
-    const { response } = error;
+/*
+error handling logic
+*/
+const errorHandler = (error: {
+    response: Response;
+    data: string | object;
+}): Response => {
+    const { response, data } = error;
+    const errorMessage: string = data as string;
     if (response && response.status) {
-        const errorText = codeMessage[response.status] || response.statusText;
+        const errorText = errorMessage || codeMessage[response.status];
         const { status, url } = response;
 
         notification.error({
@@ -45,12 +49,14 @@ const errorHandler = (error: { response: Response }): Response => {
     return response;
 };
 
-/**
- * 配置request请求时的默认参数
- */
+/*
+configure default params for request
+documentation: https://github.com/umijs/umi-request/blob/master/README_zh-CN.md#request-options-%E5%8F%82%E6%95%B0
+*/
 const request = extend({
-    errorHandler, // 默认错误处理
-    credentials: 'include' // 默认请求是否带上cookie
+    errorHandler, // default error handler
+    credentials: 'include', // include cookies in requests
+    getResponse: true
 });
 
 export default request;

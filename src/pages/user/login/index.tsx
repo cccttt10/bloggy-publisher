@@ -9,7 +9,7 @@ import { connect } from 'dva';
 import { StateType } from '@/models/login';
 import LoginComponents, { TabType } from './components/Login';
 import styles from './style.less';
-import { LoginParamsType } from '@/services/login';
+import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
 import { ConnectState } from '@/models/connect';
 
 const {
@@ -30,7 +30,7 @@ interface LoginProps {
     submitting?: boolean;
 }
 interface LoginState {
-    type: TabType;
+    activeTab: TabType;
     autoLogin: boolean;
 }
 
@@ -38,7 +38,7 @@ class Login extends Component<LoginProps, LoginState> {
     loginForm: FormComponentProps['form'] | undefined | null = undefined;
 
     state: LoginState = {
-        type: 'login',
+        activeTab: 'login',
         autoLogin: true
     };
 
@@ -48,32 +48,29 @@ class Login extends Component<LoginProps, LoginState> {
         });
     };
 
-    handleSubmit = (err: unknown, values: LoginParamsType) => {
-        const { type } = this.state;
+    handleSubmit = (
+        err: unknown,
+        values: LoginRequestBody | RegisterRequestBody
+    ) => {
+        const { activeTab } = this.state;
         if (!err) {
             const { dispatch } = this.props;
-            if (type === 'login') {
+            if (activeTab === 'login') {
                 dispatch({
                     type: 'login/login',
-                    payload: {
-                        ...values
-                        // type
-                    }
+                    payload: values as LoginRequestBody
                 });
-            } else if (type === 'register') {
+            } else if (activeTab === 'register') {
                 dispatch({
                     type: 'login/register',
-                    payload: {
-                        ...values
-                        // type
-                    }
+                    payload: values as RegisterRequestBody
                 });
             }
         }
     };
 
-    onTabChange = (type: TabType) => {
-        this.setState({ type });
+    onTabChange = (activeTab: TabType) => {
+        this.setState({ activeTab });
     };
 
     renderMessage = (content: string) => (
@@ -88,11 +85,11 @@ class Login extends Component<LoginProps, LoginState> {
     render() {
         const { userLogin = {}, submitting } = this.props;
         const { status, type: loginType } = userLogin;
-        const { type, autoLogin } = this.state;
+        const { activeTab, autoLogin } = this.state;
         return (
             <div className={styles.main}>
                 <LoginComponents
-                    defaultActiveKey={type}
+                    defaultActiveKey={activeTab}
                     onTabChange={this.onTabChange}
                     onSubmit={this.handleSubmit}
                     onCreate={(form?: FormComponentProps['form']) => {
@@ -275,7 +272,7 @@ class Login extends Component<LoginProps, LoginState> {
                     <Submit loading={submitting}>
                         <FormattedMessage
                             id={
-                                type === 'login'
+                                activeTab === 'login'
                                     ? 'user-login.login.button'
                                     : 'user-login.register.button'
                             }
@@ -297,5 +294,5 @@ class Login extends Component<LoginProps, LoginState> {
 
 export default connect(({ login, loading }: ConnectState) => ({
     userLogin: login,
-    submitting: loading.effects['login/login']
+    submitting: loading.effects['login/login'] || loading.effects['login/register']
 }))(Login);

@@ -5,7 +5,7 @@ import { Redirect } from 'umi';
 import { stringify } from 'querystring';
 import { ConnectState, ConnectProps } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
-import { QueryCurrentParams } from '@/services/user';
+import cookieChecker from 'js-cookie';
 
 interface SecurityLayoutProps extends ConnectProps {
     loading?: boolean;
@@ -25,34 +25,43 @@ class SecurityLayout extends React.Component<
         isReady: false
     };
 
-    componentDidMount() {
-        this.setState({
-            isReady: true
-        });
+    componentWillMount() {
         const { dispatch } = this.props;
-        const queryCurrentParams: QueryCurrentParams = {
-            _id: this.props.userId as string
-        };
-        if (dispatch) {
+        const isLogin: boolean =
+            typeof cookieChecker.get('jwt') === 'string' &&
+            (cookieChecker.get('jwt') as string).length > 0;
+
+        if (isLogin && dispatch) {
             dispatch({
-                type: 'user/fetchCurrent',
-                payload: queryCurrentParams
+                type: 'user/getCurrentUser'
             });
         }
     }
 
+    componentDidMount() {
+        this.setState({
+            isReady: true
+        });
+    }
+
     render() {
         const { isReady } = this.state;
-        const { children, loading, currentUser } = this.props;
-        // You can replace it to your authentication rule (such as check token exists)
-        // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
-        const isLogin = currentUser && currentUser._id;
-        console.log('after isLogin');
-        console.log(currentUser);
+        const { children, loading } = this.props;
+
+        /*
+        check if user is logged in
+        in this case, check if token exists
+        but can replace with other auth logic if auth logic changes
+        这里是比如判断 token 是否存在
+        你可以把它替换成你自己的登录认证规则
+        */
+        const isLogin: boolean =
+            typeof cookieChecker.get('jwt') === 'string' &&
+            (cookieChecker.get('jwt') as string).length > 0;
+
         const queryString = stringify({
             redirect: window.location.href
         });
-
         if ((!isLogin && loading) || !isReady) {
             return <PageLoading />;
         }

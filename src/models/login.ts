@@ -2,8 +2,15 @@ import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import { stringify } from 'querystring';
 import { router } from 'umi';
-
-import { login, register } from '@/services/login';
+import { RequestResponse } from 'umi-request';
+import {
+    login,
+    register,
+    LoginRequestBody,
+    RegisterRequestBody,
+    LoginResponseBody,
+    RegisterResponseBody
+} from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
@@ -18,8 +25,14 @@ export interface LoginModelType {
     namespace: string;
     state: StateType;
     effects: {
-        login: Effect;
-        register: Effect;
+        login: (
+            { payload }: { type: string; payload: LoginRequestBody },
+            { call }: { call: Function }
+        ) => Generator;
+        register: (
+            { payload }: { type: string; payload: RegisterRequestBody },
+            { call }: { call: Function }
+        ) => Generator;
         logout: Effect;
     };
     reducers: {
@@ -35,18 +48,18 @@ const Model: LoginModelType = {
     },
 
     effects: {
-        *login({ payload }, { call, put }) {
-            const response = yield call(login, payload);
-            yield put({
-                type: 'changeLoginStatus',
-                payload: response.user
-            });
+        *login(
+            { payload }: { type: string; payload: LoginRequestBody },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<LoginResponseBody> = (yield call(
+                login,
+                payload
+            )) as RequestResponse<LoginResponseBody>;
+            const loginResponseBody: LoginResponseBody = response.data;
+
             // login successful
-            console.log(response);
-            localStorage.setItem('userId', response.user._id);
-            console.log('item just set');
-            console.log(localStorage.getItem('userId'));
-            if (true || response.status === 'ok') {
+            if (loginResponseBody) {
                 const urlParams = new URL(window.location.href);
                 const params = getPageQuery();
                 let { redirect } = params as { redirect: string };
@@ -67,16 +80,18 @@ const Model: LoginModelType = {
             }
         },
 
-        *register({ payload }, { call, put }) {
-            const response = yield call(register, payload);
+        *register(
+            { payload }: { type: string; payload: RegisterRequestBody },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<RegisterResponseBody> = (yield call(
+                register,
+                payload
+            )) as RequestResponse<RegisterResponseBody>;
+            const registerResponseBody: RegisterResponseBody = response.data;
 
-            yield put({
-                type: 'changeLoginStatus',
-                payload: response
-            });
             // register successful
-            console.log(response);
-            if (true || response.status === 200) {
+            if (registerResponseBody) {
                 const urlParams = new URL(window.location.href);
                 const params = getPageQuery();
                 let { redirect } = params as { redirect: string };

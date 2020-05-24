@@ -8,14 +8,17 @@ import LoginItem, { LoginItemProps, LoginItemType } from './LoginItem';
 import LoginSubmit from './LoginSubmit';
 import LoginTab from './LoginTab';
 import styles from './index.less';
-import { LoginParamsType } from '@/services/login';
+import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
 
 export type TabType = 'login' | 'register';
 export interface LoginProps {
     defaultActiveKey?: string;
     onTabChange?: (key: TabType) => void;
     style?: React.CSSProperties;
-    onSubmit?: (error: unknown, values: LoginParamsType) => void;
+    onSubmit?: (
+        error: unknown,
+        values: LoginRequestBody | RegisterRequestBody
+    ) => void;
     className?: string;
     form: FormComponentProps['form'];
     onCreate?: (form?: FormComponentProps['form']) => void;

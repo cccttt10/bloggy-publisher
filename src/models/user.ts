@@ -1,36 +1,38 @@
-import { Effect } from 'dva';
-import { Reducer } from 'redux';
+import { RequestResponse } from 'umi-request';
 
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { getCurrentUser, GetCurrentUserResponseBody } from '@/services/user';
 
 export interface CurrentUser {
-    avatar?: string;
-    name?: string;
-    title?: string;
-    group?: string;
-    signature?: string;
-    tags?: {
-        key: string;
-        label: string;
-    }[];
-    _id?: string;
-    unreadCount?: number;
+    name: string;
+    phone: string;
+    imgUrl: string;
+    email: string;
+    bio: string;
+    avatar: string;
+    location: string;
+    createdOn: Date;
+    updatedOn: Date;
+    _id: string;
 }
 
 export interface UserModelState {
-    currentUser?: CurrentUser;
+    currentUser: CurrentUser;
 }
 
 export interface UserModelType {
     namespace: 'user';
     state: UserModelState;
     effects: {
-        fetch: Effect;
-        fetchCurrent: Effect;
+        getCurrentUser: (
+            _: { type: string },
+            { call, put }: { call: Function; put: Function }
+        ) => Generator;
     };
     reducers: {
-        saveCurrentUser: Reducer<UserModelState>;
-        changeNotifyCount: Reducer<UserModelState>;
+        saveCurrentUser: (
+            state: UserModelState,
+            { payload }: { type: string; payload: CurrentUser }
+        ) => UserModelState;
     };
 }
 
@@ -38,48 +40,44 @@ const UserModel: UserModelType = {
     namespace: 'user',
 
     state: {
-        currentUser: {}
+        currentUser: {
+            name: '',
+            phone: '',
+            imgUrl: '',
+            email: '',
+            bio: '',
+            avatar: '',
+            location: '',
+            createdOn: new Date(),
+            updatedOn: new Date(),
+            _id: ''
+        }
     },
 
     effects: {
-        *fetch(_, { call, put }) {
-            const response = yield call(queryUsers);
-            yield put({
-                type: 'save',
-                payload: response
-            });
-        },
-        *fetchCurrent({ payload }, { call, put }) {
-            console.log(`payload is`);
-            console.log(payload);
-            const response = yield call(queryCurrent, payload);
-            yield put({
-                type: 'saveCurrentUser',
-                payload: response.user
-            });
+        *getCurrentUser(_, { call, put }: { call: Function; put: Function }) {
+            const response: RequestResponse<GetCurrentUserResponseBody> = (yield call(
+                getCurrentUser
+            )) as RequestResponse<GetCurrentUserResponseBody>;
+            const getCurrentUserResponseBody: GetCurrentUserResponseBody =
+                response.data;
+            if (getCurrentUserResponseBody) {
+                yield put({
+                    type: 'saveCurrentUser',
+                    payload: getCurrentUserResponseBody.user as CurrentUser
+                });
+            }
         }
     },
 
     reducers: {
-        saveCurrentUser(state, action) {
+        saveCurrentUser(
+            state: UserModelState,
+            { payload }: { type: string; payload: CurrentUser }
+        ): UserModelState {
             return {
                 ...state,
-                currentUser: action.payload || {}
-            };
-        },
-        changeNotifyCount(
-            state = {
-                currentUser: {}
-            },
-            action
-        ) {
-            return {
-                ...state,
-                currentUser: {
-                    ...state.currentUser,
-                    notifyCount: action.payload.totalCount,
-                    unreadCount: action.payload.unreadCount
-                }
+                currentUser: payload
             };
         }
     }

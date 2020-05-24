@@ -1,21 +1,23 @@
 import request from '@/utils/request';
+import { RequestResponse } from 'umi-request';
 
-export async function query(): Promise<any> {
-    return request('/api/users');
+export interface GetCurrentUserResponseBody {
+    user: {
+        name: string;
+        phone: string;
+        imgUrl: string;
+        email: string;
+        bio: string;
+        avatar: string;
+        location: string;
+        createdOn: Date;
+        updatedOn: Date;
+        _id: string;
+    };
 }
 
-export interface QueryCurrentParams {
-    _id: string;
-}
-
-export async function queryCurrent(params: QueryCurrentParams): Promise<any> {
-    console.log(params);
-    return request('http://localhost:3300/getUser', {
-        method: 'POST',
-        data: params
-    });
-}
-
-export async function queryNotices(): Promise<any> {
-    return request('/api/notices');
+export async function getCurrentUser(): Promise<
+    RequestResponse<GetCurrentUserResponseBody>
+> {
+    return request('http://localhost:3300/getCurrentUser', { method: 'GET' });
 }

@@ -1,9 +1,3 @@
-/**
- * Ant Design Pro v4 use `@ant-design/pro-layout` to handle Layout.
- * You can view component api by:
- * https://github.com/ant-design/ant-design-pro-layout
- */
-
 import ProLayout, {
     MenuDataItem,
     BasicLayoutProps as ProLayoutProps,
@@ -21,8 +15,8 @@ import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
+import cookieChecker from 'js-cookie';
 import logo from '../assets/logo.svg';
-import { QueryCurrentParams } from '@/services/user';
 
 const noMatch = (
     <Result
@@ -53,9 +47,9 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
     };
 };
 
-/**
- * use Authorized check all menu item
- */
+/*
+use Authorized check all menu item
+*/
 const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
     menuList.map(item => {
         const localItem = {
@@ -122,23 +116,22 @@ const footerRender: BasicLayoutProps['footerRender'] = () => {
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
     const { dispatch, children, settings, location = { pathname: '/' } } = props;
-    /**
-     * constructor
-     */
 
     useEffect(() => {
-        if (dispatch) {
-            const userId: string = localStorage.getItem('userId') as string;
-            const queryCurrentParams: QueryCurrentParams = { _id: userId };
+        const isLogin: boolean =
+            typeof cookieChecker.get('jwt') === 'string' &&
+            (cookieChecker.get('jwt') as string).length > 0;
+
+        if (isLogin && dispatch) {
             dispatch({
-                type: 'user/fetchCurrent',
-                payload: queryCurrentParams
+                type: 'user/getCurrentUser'
             });
         }
     }, []);
-    /**
-     * init variables
-     */
+
+    /*
+    init variables
+    */
     const handleMenuCollapse = (payload: boolean): void => {
         if (dispatch) {
             dispatch({
@@ -147,7 +140,10 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             });
         }
     };
-    // get children authority
+
+    /*
+    get children authority
+    */
     const authorized = getAuthorityFromRouter(
         props.route.routes,
         location.pathname || '/'

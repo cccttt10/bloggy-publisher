@@ -52,46 +52,29 @@ class Login extends Component<LoginProps, LoginState> {
         const { type } = this.state;
         if (!err) {
             const { dispatch } = this.props;
-            dispatch({
-                type: 'login/login',
-                payload: {
-                    ...values,
-                    type
-                }
-            });
+            if (type === 'login') {
+                dispatch({
+                    type: 'login/login',
+                    payload: {
+                        ...values
+                        // type
+                    }
+                });
+            } else if (type === 'register') {
+                dispatch({
+                    type: 'login/register',
+                    payload: {
+                        ...values
+                        // type
+                    }
+                });
+            }
         }
     };
 
     onTabChange = (type: TabType) => {
         this.setState({ type });
     };
-
-    onGetCaptcha = () =>
-        new Promise<boolean>((resolve, reject) => {
-            if (!this.loginForm) {
-                return;
-            }
-            this.loginForm.validateFields(
-                ['mobile'],
-                {},
-                async (err: unknown, values: LoginParamsType) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        const { dispatch } = this.props;
-                        try {
-                            const success = await ((dispatch({
-                                type: 'login/getCaptcha',
-                                payload: values.mobile
-                            }) as unknown) as Promise<unknown>);
-                            resolve(!!success);
-                        } catch (error) {
-                            reject(error);
-                        }
-                    }
-                }
-            );
-        });
 
     renderMessage = (content: string) => (
         <Alert
@@ -123,7 +106,7 @@ class Login extends Component<LoginProps, LoginState> {
                         })}
                     >
                         {status === 'error' &&
-                            loginType === 'account' &&
+                            loginType === 'login' &&
                             !submitting &&
                             this.renderMessage(
                                 formatMessage({
@@ -180,7 +163,7 @@ class Login extends Component<LoginProps, LoginState> {
                         })}
                     >
                         {status === 'error' &&
-                            loginType === 'mobile' &&
+                            loginType === 'register' &&
                             !submitting &&
                             this.renderMessage(
                                 formatMessage({
@@ -254,12 +237,6 @@ class Login extends Component<LoginProps, LoginState> {
                                     })
                                 }
                             ]}
-                            onPressEnter={e => {
-                                e.preventDefault();
-                                if (this.loginForm) {
-                                    this.loginForm.validateFields(this.handleSubmit);
-                                }
-                            }}
                         />
 
                         <RegisterConfirmPassword

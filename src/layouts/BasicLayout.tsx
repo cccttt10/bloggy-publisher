@@ -22,6 +22,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
+import { QueryCurrentParams } from '@/services/user';
 
 const noMatch = (
     <Result
@@ -127,8 +128,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
     useEffect(() => {
         if (dispatch) {
+            const userId: string = localStorage.getItem('userId') as string;
+            const queryCurrentParams: QueryCurrentParams = { _id: userId };
             dispatch({
-                type: 'user/fetchCurrent'
+                type: 'user/fetchCurrent',
+                payload: queryCurrentParams
             });
         }
     }, []);

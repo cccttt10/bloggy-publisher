@@ -13,7 +13,7 @@ export interface CurrentUser {
         key: string;
         label: string;
     }[];
-    userid?: string;
+    _id?: string;
     unreadCount?: number;
 }
 
@@ -49,11 +49,13 @@ const UserModel: UserModelType = {
                 payload: response
             });
         },
-        *fetchCurrent(_, { call, put }) {
-            const response = yield call(queryCurrent);
+        *fetchCurrent({ payload }, { call, put }) {
+            console.log(`payload is`);
+            console.log(payload);
+            const response = yield call(queryCurrent, payload);
             yield put({
                 type: 'saveCurrentUser',
-                payload: response
+                payload: response.user
             });
         }
     },

@@ -59,18 +59,5 @@ export default {
             type: 'password',
             id: 'register-confirm-password'
         }
-    },
-
-    Captcha: {
-        props: {
-            size: 'large',
-            prefix: <Icon type="mail" className={styles.prefixIcon} />
-        },
-        rules: [
-            {
-                required: true,
-                message: 'Please enter Captcha!'
-            }
-        ]
     }
 };

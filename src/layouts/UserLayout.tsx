@@ -1,17 +1,18 @@
 import {
     DefaultFooter,
-    MenuDataItem,
     getMenuData,
-    getPageTitle
+    getPageTitle,
+    MenuDataItem
 } from '@ant-design/pro-layout';
+import { connect } from 'dva';
+import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'umi';
-import React from 'react';
-import { connect } from 'dva';
 import { formatMessage } from 'umi-plugin-react/locale';
 
 import SelectLang from '@/components/SelectLang';
 import { ConnectProps, ConnectState } from '@/models/connect';
+
 import logo from '../assets/logo.svg';
 import styles from './UserLayout.less';
 

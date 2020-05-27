@@ -1,11 +1,12 @@
-import React from 'react';
-import { connect } from 'dva';
 import { PageLoading } from '@ant-design/pro-layout';
-import { Redirect } from 'umi';
-import { stringify } from 'querystring';
-import { ConnectState, ConnectProps } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { connect } from 'dva';
 import cookieChecker from 'js-cookie';
+import { stringify } from 'querystring';
+import React from 'react';
+import { Redirect } from 'umi';
+
+import { ConnectProps, ConnectState } from '@/models/connect';
+import { CurrentUser } from '@/models/user';
 
 interface SecurityLayoutProps extends ConnectProps {
     loading?: boolean;
@@ -25,7 +26,7 @@ class SecurityLayout extends React.Component<
         isReady: false
     };
 
-    componentWillMount() {
+    componentWillMount(): void {
         const { dispatch } = this.props;
         const isLogin: boolean =
             typeof cookieChecker.get('jwt') === 'string' &&
@@ -38,13 +39,13 @@ class SecurityLayout extends React.Component<
         }
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.setState({
             isReady: true
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         const { isReady } = this.state;
         const { children, loading } = this.props;
 

@@ -1,5 +1,6 @@
-import { parse } from 'querystring';
 import pathRegexp from 'path-to-regexp';
+import { parse, ParsedUrlQuery } from 'querystring';
+
 import { Route } from '@/models/connect';
 
 /* eslint no-useless-escape:0 import/prefer-default-export:0 */
@@ -23,7 +24,8 @@ export const isAntDesignProOrDev = (): boolean => {
     return isAntDesignPro();
 };
 
-export const getPageQuery = () => parse(window.location.href.split('?')[1]);
+export const getPageQuery = (): ParsedUrlQuery =>
+    parse(window.location.href.split('?')[1]);
 
 /**
  * props.route.routes
@@ -43,7 +45,10 @@ export const getAuthorityFromRouter = <T extends Route>(
     return undefined;
 };
 
-export const getRouteAuthority = (path: string, routeData: Route[]) => {
+export const getRouteAuthority = (
+    path: string,
+    routeData: Route[]
+): string | string[] | undefined => {
     let authorities: string[] | string | undefined;
     routeData.forEach(route => {
         // match prefix

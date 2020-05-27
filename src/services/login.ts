@@ -1,5 +1,6 @@
-import request from '@/utils/request';
 import { RequestResponse } from 'umi-request';
+
+import request from '@/utils/request';
 
 export interface RegisterRequestBody {
     email: string;
@@ -23,7 +24,7 @@ export interface RegisterResponseBody {
     };
 }
 
-export async function register(
+export function register(
     params: RegisterRequestBody
 ): Promise<RequestResponse<RegisterResponseBody>> {
     return request('http://localhost:3300/register', {
@@ -52,7 +53,7 @@ export interface LoginResponseBody {
     };
 }
 
-export async function login(
+export function login(
     params: LoginRequestBody
 ): Promise<RequestResponse<LoginResponseBody>> {
     return request('http://localhost:3300/login', {

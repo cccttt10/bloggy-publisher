@@ -1,8 +1,15 @@
 import { Icon } from 'antd';
+import { ValidationRule } from 'antd/es/form/Form';
 import React from 'react';
+
 import styles from './index.less';
 
-export default {
+const map: {
+    [loginItem: string]: {
+        props: { size: string; id: string; prefix: JSX.Element; type?: string };
+        rules?: ValidationRule[];
+    };
+} = {
     LoginEmail: {
         props: {
             size: 'large',
@@ -61,3 +68,5 @@ export default {
         }
     }
 };
+
+export default map;

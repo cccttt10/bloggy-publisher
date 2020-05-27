@@ -1,5 +1,6 @@
-import request from '@/utils/request';
 import { RequestResponse } from 'umi-request';
+
+import request from '@/utils/request';
 
 export interface GetCurrentUserResponseBody {
     user: {
@@ -16,7 +17,7 @@ export interface GetCurrentUserResponseBody {
     };
 }
 
-export async function getCurrentUser(): Promise<
+export function getCurrentUser(): Promise<
     RequestResponse<GetCurrentUserResponseBody>
 > {
     return request('http://localhost:3300/getCurrentUser', { method: 'GET' });

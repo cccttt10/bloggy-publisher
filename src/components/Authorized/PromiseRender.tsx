@@ -1,6 +1,7 @@
-import React from 'react';
 import { Spin } from 'antd';
 import isEqual from 'lodash/isEqual';
+import React from 'react';
+
 import { isComponentClass } from './Secured';
 // eslint-disable-next-line import/no-cycle
 
@@ -22,14 +23,14 @@ export default class PromiseRender<T, K> extends React.Component<
         component: () => null
     };
 
-    componentDidMount() {
+    componentDidMount(): void {
         this.setRenderComponent(this.props);
     }
 
     shouldComponentUpdate = (
         nextProps: PromiseRenderProps<T, K>,
         nextState: PromiseRenderState
-    ) => {
+    ): boolean => {
         const { component } = this.state;
         if (!isEqual(nextProps, this.props)) {
             this.setRenderComponent(nextProps);
@@ -39,7 +40,7 @@ export default class PromiseRender<T, K> extends React.Component<
     };
 
     // set render Component : ok or error
-    setRenderComponent(props: PromiseRenderProps<T, K>) {
+    setRenderComponent(props: PromiseRenderProps<T, K>): void {
         const ok = this.checkIsInstantiation(props.ok);
         const error = this.checkIsInstantiation(props.error);
         props.promise
@@ -65,16 +66,17 @@ export default class PromiseRender<T, K> extends React.Component<
     ): React.FunctionComponent => {
         if (isComponentClass(target)) {
             const Target = target as React.ComponentClass;
-            return (props: any) => <Target {...props} />;
+            return (props: object): JSX.Element => <Target {...props} />;
         }
         if (React.isValidElement(target)) {
-            return (props: any) => React.cloneElement(target, props);
+            return (props: object): JSX.Element => React.cloneElement(target, props);
         }
-        return () => target as React.ReactNode & null;
+        return (): React.ReactNode & null => target as React.ReactNode & null;
     };
 
-    render() {
+    render(): JSX.Element {
         const { component: Component } = this.state;
+        // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
         const { ok, error, promise, ...rest } = this.props;
 
         return Component ? (

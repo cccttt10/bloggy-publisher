@@ -1,9 +1,9 @@
 import { Icon, Menu } from 'antd';
+import { ClickParam } from 'antd/es/menu';
+import classNames from 'classnames';
+import React from 'react';
 import { formatMessage, getLocale, setLocale } from 'umi-plugin-react/locale';
 
-import { ClickParam } from 'antd/es/menu';
-import React from 'react';
-import classNames from 'classnames';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -31,10 +31,13 @@ const SelectLang: React.FC<SelectLangProps> = props => {
         >
             {locales.map(locale => (
                 <Menu.Item key={locale}>
-                    <span role="img" aria-label={languageLabels[locale]}>
-                        {languageIcons[locale]}
+                    <span
+                        role="img"
+                        aria-label={languageLabels[locale as 'zh-CN' | 'en-US']}
+                    >
+                        {languageIcons[locale as 'zh-CN' | 'en-US']}
                     </span>{' '}
-                    {languageLabels[locale]}
+                    {languageLabels[locale as 'zh-CN' | 'en-US']}
                 </Menu.Item>
             ))}
         </Menu>

@@ -1,12 +1,13 @@
 import { Avatar, Icon, Menu, Spin } from 'antd';
 import { ClickParam } from 'antd/es/menu';
-import { FormattedMessage } from 'umi-plugin-react/locale';
-import React from 'react';
 import { connect } from 'dva';
+import React from 'react';
 import { router } from 'umi';
+import { FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
 import { CurrentUser } from '@/models/user';
+
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -16,7 +17,7 @@ export interface GlobalHeaderRightProps extends ConnectProps {
 }
 
 class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
-    onMenuClick = (event: ClickParam) => {
+    onMenuClick = (event: ClickParam): void => {
         const { key } = event;
 
         if (key === 'logout') {
@@ -32,7 +33,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
         router.push(`/account/${key}`);
     };
 
-    render(): React.ReactNode {
+    render(): JSX.Element {
         const { currentUser = { avatar: '', name: '' }, menu } = this.props;
 
         const menuHeaderDropdown = (

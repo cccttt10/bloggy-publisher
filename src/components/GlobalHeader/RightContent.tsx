@@ -1,10 +1,11 @@
 import { Tag } from 'antd';
-import React from 'react';
 import { connect } from 'dva';
+import React from 'react';
+
 import { ConnectProps, ConnectState } from '@/models/connect';
 
-import Avatar from './AvatarDropdown';
 import SelectLang from '../SelectLang';
+import Avatar from './AvatarDropdown';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';

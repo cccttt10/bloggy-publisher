@@ -1,8 +1,8 @@
-import React from 'react';
 import { Result } from 'antd';
-import check, { IAuthorityType } from './CheckPermissions';
+import React from 'react';
 
 import AuthorizedRoute from './AuthorizedRoute';
+import check, { IAuthorityType } from './CheckPermissions';
 import Secured from './Secured';
 
 interface AuthorizedProps {

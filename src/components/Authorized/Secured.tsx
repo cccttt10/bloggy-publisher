@@ -1,11 +1,12 @@
 import React from 'react';
+
 import CheckPermissions from './CheckPermissions';
 
 /**
  * 默认不能访问任何页面
  * default is "NULL"
  */
-const Exception403 = () => 403;
+const Exception403 = (): number => 403;
 
 export const isComponentClass = (
     component: React.ComponentClass | React.ReactNode
@@ -20,15 +21,17 @@ export const isComponentClass = (
 // AuthorizedRoute is already instantiated
 // Authorized  render is already instantiated, children is no instantiated
 // Secured is not instantiated
-const checkIsInstantiation = (target: React.ComponentClass | React.ReactNode) => {
+const checkIsInstantiation = (
+    target: React.ComponentClass | React.ReactNode
+): React.ReactNode => {
     if (isComponentClass(target)) {
         const Target = target as React.ComponentClass;
-        return (props: any) => <Target {...props} />;
+        return (props: object): React.ReactNode => <Target {...props} />;
     }
     if (React.isValidElement(target)) {
-        return (props: any) => React.cloneElement(target, props);
+        return (props: object): React.ReactNode => React.cloneElement(target, props);
     }
-    return () => target;
+    return (): React.ReactNode => target;
 };
 
 /**
@@ -46,6 +49,7 @@ const checkIsInstantiation = (target: React.ComponentClass | React.ReactNode) =>
  * @param {string | function | Promise} authority
  * @param {ReactNode} error 非必需参数
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 const authorize = (authority: string, error?: React.ReactNode) => {
     /**
      * conversion into a class
@@ -59,6 +63,7 @@ const authorize = (authority: string, error?: React.ReactNode) => {
     if (!authority) {
         throw new Error('authority is required');
     }
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     return function decideAuthority(target: React.ComponentClass | React.ReactNode) {
         const component = CheckPermissions(
             authority,

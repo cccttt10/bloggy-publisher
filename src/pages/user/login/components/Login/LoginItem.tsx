@@ -1,10 +1,10 @@
 import { Form, Input } from 'antd';
-import React, { Component } from 'react';
 import { FormComponentProps } from 'antd/es/form';
-import { GetFieldDecoratorOptions } from 'antd/es/form/Form';
+import { GetFieldDecoratorOptions, ValidationRule } from 'antd/es/form/Form';
+import React, { Component } from 'react';
 
-import ItemMap from './map';
 import LoginContext, { LoginContextProps } from './LoginContext';
+import ItemMap from './map';
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
@@ -44,14 +44,14 @@ const FormItem = Form.Item;
 class WrapFormItem extends Component<LoginItemProps> {
     interval: number | undefined = undefined;
 
-    componentDidMount() {
+    componentDidMount(): void {
         const { updateActive, name = '' } = this.props;
         if (updateActive) {
             updateActive(name);
         }
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         clearInterval(this.interval);
     }
 
@@ -60,7 +60,11 @@ class WrapFormItem extends Component<LoginItemProps> {
         defaultValue,
         customProps = {},
         rules
-    }: LoginItemProps) => {
+    }: LoginItemProps): {
+        rules?: LoginItemProps['rules'];
+        onChange?: LoginItemProps['onChange'];
+        initialValue?: LoginItemProps['defaultValue'];
+    } => {
         const options: {
             rules?: LoginItemProps['rules'];
             onChange?: LoginItemProps['onChange'];
@@ -77,20 +81,9 @@ class WrapFormItem extends Component<LoginItemProps> {
         return options;
     };
 
-    render() {
+    render(): JSX.Element | null {
         // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil
-        const {
-            onChange,
-            customProps,
-            defaultValue,
-            rules,
-            name,
-            updateActive,
-            type,
-            form,
-            tabUtil,
-            ...restProps
-        } = this.props;
+        const { customProps, name, form, ...restProps } = this.props;
         if (!name) {
             return null;
         }
@@ -116,10 +109,22 @@ class WrapFormItem extends Component<LoginItemProps> {
 const LoginItem: Partial<LoginItemType> = {};
 
 Object.keys(ItemMap).forEach(key => {
-    const item = ItemMap[key];
-    LoginItem[key] = (props: LoginItemProps) => (
+    const item: {
+        props: { size: string; id: string; prefix: JSX.Element; type?: string };
+        rules?: ValidationRule[];
+    } = ItemMap[key];
+    LoginItem[
+        key as
+            | 'LoginEmail'
+            | 'LoginPassword'
+            | 'RegisterEmail'
+            | 'RegisterName'
+            | 'RegisterPhone'
+            | 'RegisterPassword'
+            | 'RegisterConfirmPassword'
+    ] = (props: LoginItemProps): JSX.Element => (
         <LoginContext.Consumer>
-            {context => (
+            {(context: LoginContextProps): JSX.Element => (
                 <WrapFormItem
                     customProps={item.props}
                     rules={item.rules}

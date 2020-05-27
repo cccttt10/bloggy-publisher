@@ -1,14 +1,15 @@
 import { Form, Tabs } from 'antd';
-import React, { Component } from 'react';
 import { FormComponentProps } from 'antd/es/form';
 import classNames from 'classnames';
+import React, { Component } from 'react';
+
+import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
+
+import styles from './index.less';
 import LoginContext, { LoginContextProps } from './LoginContext';
 import LoginItem, { LoginItemProps, LoginItemType } from './LoginItem';
-
 import LoginSubmit from './LoginSubmit';
 import LoginTab from './LoginTab';
-import styles from './index.less';
-import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
 
 export type TabType = 'login' | 'register';
 export interface LoginProps {
@@ -53,8 +54,10 @@ class Login extends Component<LoginProps, LoginState> {
     static defaultProps = {
         className: '',
         defaultActiveKey: '',
-        onTabChange: () => {},
-        onSubmit: () => {}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onTabChange: (): void => {},
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onSubmit: (): void => {}
     };
 
     constructor(props: LoginProps) {
@@ -66,14 +69,14 @@ class Login extends Component<LoginProps, LoginState> {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(): void {
         const { form, onCreate } = this.props;
         if (onCreate) {
             onCreate(form);
         }
     }
 
-    onSwitch = (type: string) => {
+    onSwitch = (type: string): void => {
         this.setState(
             {
                 type
@@ -92,19 +95,19 @@ class Login extends Component<LoginProps, LoginState> {
         const { tabs = [] } = this.state;
         return {
             tabUtil: {
-                addTab: id => {
+                addTab: (id: string): void => {
                     this.setState({
                         tabs: [...tabs, id]
                     });
                 },
-                removeTab: id => {
+                removeTab: (id: string): void => {
                     this.setState({
                         tabs: tabs.filter(currentId => currentId !== id)
                     });
                 }
             },
             form: { ...form },
-            updateActive: activeItem => {
+            updateActive: (activeItem): void => {
                 const { type = '', active = {} } = this.state;
                 if (active[type]) {
                     active[type].push(activeItem);
@@ -118,7 +121,7 @@ class Login extends Component<LoginProps, LoginState> {
         };
     };
 
-    handleSubmit = (e: React.FormEvent) => {
+    handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
         const { active = {}, type = '' } = this.state;
         const { form, onSubmit } = this.props;
@@ -136,7 +139,7 @@ class Login extends Component<LoginProps, LoginState> {
         }
     };
 
-    render() {
+    render(): JSX.Element {
         const { className, children } = this.props;
         const { type, tabs = [] } = this.state;
         const TabChildren: React.ReactComponentElement<typeof LoginTab>[] = [];

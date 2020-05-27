@@ -21,7 +21,6 @@
         "start:dev": "cross-env REACT_APP_ENV=dev UMI_UI=none umi dev",
         "start:pre": "cross-env REACT_APP_ENV=pre MOCK=none umi dev",
         "tsc-check": "tsc --noEmit",
-        "check": "npm run prettier && npm run lint:fix && npm run tsc-check",
         "ui": "umi ui"
     },
     "husky": {
@@ -71,9 +70,13 @@
         "@types/react": "^16.8.19",
         "@types/react-dom": "^16.8.4",
         "@types/react-helmet": "^5.0.13",
+        "@typescript-eslint/eslint-plugin": "^3.0.0",
+        "@typescript-eslint/parser": "^3.0.0",
         "@umijs/fabric": "^2.0.2",
         "chalk": "^3.0.0",
         "cross-env": "^7.0.2",
+        "eslint": "^7.1.0",
+        "eslint-plugin-simple-import-sort": "^5.0.3",
         "gh-pages": "^2.0.1",
         "husky": "^4.0.7",
         "lint-staged": "^10.0.0",

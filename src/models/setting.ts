@@ -1,4 +1,5 @@
 import { Reducer } from 'redux';
+
 import defaultSettings, { DefaultSettings } from '../../config/defaultSettings';
 
 export interface SettingModelType {
@@ -20,7 +21,7 @@ const SettingModel: SettingModelType = {
     namespace: 'settings',
     state: defaultSettings,
     reducers: {
-        changeSetting(state = defaultSettings, { payload }) {
+        changeSetting(state = defaultSettings, { payload }): DefaultSettings {
             const { colorWeak, contentWidth } = payload;
 
             if (state.contentWidth !== contentWidth && window.dispatchEvent) {

@@ -55,6 +55,7 @@ const UserModel: UserModelType = {
     },
 
     effects: {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *getCurrentUser(_, { call, put }: { call: Function; put: Function }) {
             const response: RequestResponse<GetCurrentUserResponseBody> = (yield call(
                 getCurrentUser

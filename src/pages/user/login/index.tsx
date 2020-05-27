@@ -1,16 +1,17 @@
 import { Alert, Checkbox, Icon } from 'antd';
-import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
-import React, { Component } from 'react';
-
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
-import { Dispatch, AnyAction } from 'redux';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'dva';
-import { StateType } from '@/models/login';
+import React, { Component } from 'react';
+import { AnyAction, Dispatch } from 'redux';
+import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
+
+import { ConnectState } from '@/models/connect';
+import { LoginModelState } from '@/models/login';
+import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
+
 import LoginComponents, { TabType } from './components/Login';
 import styles from './style.less';
-import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
-import { ConnectState } from '@/models/connect';
 
 const {
     Tab,
@@ -26,7 +27,7 @@ const {
 
 interface LoginProps {
     dispatch: Dispatch<AnyAction>;
-    userLogin: StateType;
+    userLogin: LoginModelState;
     submitting?: boolean;
 }
 interface LoginState {
@@ -42,7 +43,7 @@ class Login extends Component<LoginProps, LoginState> {
         autoLogin: true
     };
 
-    changeAutoLogin = (e: CheckboxChangeEvent) => {
+    changeAutoLogin = (e: CheckboxChangeEvent): void => {
         this.setState({
             autoLogin: e.target.checked
         });
@@ -51,7 +52,7 @@ class Login extends Component<LoginProps, LoginState> {
     handleSubmit = (
         err: unknown,
         values: LoginRequestBody | RegisterRequestBody
-    ) => {
+    ): void => {
         const { activeTab } = this.state;
         if (!err) {
             const { dispatch } = this.props;
@@ -69,11 +70,11 @@ class Login extends Component<LoginProps, LoginState> {
         }
     };
 
-    onTabChange = (activeTab: TabType) => {
+    onTabChange = (activeTab: TabType): void => {
         this.setState({ activeTab });
     };
 
-    renderMessage = (content: string) => (
+    renderMessage = (content: string): JSX.Element => (
         <Alert
             style={{ marginBottom: 24 }}
             message={content}
@@ -82,7 +83,7 @@ class Login extends Component<LoginProps, LoginState> {
         />
     );
 
-    render() {
+    render(): JSX.Element {
         const { userLogin = {}, submitting } = this.props;
         const { status, type: loginType } = userLogin;
         const { activeTab, autoLogin } = this.state;
@@ -92,7 +93,7 @@ class Login extends Component<LoginProps, LoginState> {
                     defaultActiveKey={activeTab}
                     onTabChange={this.onTabChange}
                     onSubmit={this.handleSubmit}
-                    onCreate={(form?: FormComponentProps['form']) => {
+                    onCreate={(form?: FormComponentProps['form']): void => {
                         this.loginForm = form;
                     }}
                 >
@@ -145,7 +146,9 @@ class Login extends Component<LoginProps, LoginState> {
                                     })
                                 }
                             ]}
-                            onPressEnter={e => {
+                            onPressEnter={(
+                                e: React.KeyboardEvent<HTMLElement>
+                            ): void => {
                                 e.preventDefault();
                                 if (this.loginForm) {
                                     this.loginForm.validateFields(this.handleSubmit);
@@ -250,7 +253,9 @@ class Login extends Component<LoginProps, LoginState> {
                                     })
                                 }
                             ]}
-                            onPressEnter={e => {
+                            onPressEnter={(
+                                e: React.KeyboardEvent<HTMLElement>
+                            ): void => {
                                 e.preventDefault();
                                 if (this.loginForm) {
                                     this.loginForm.validateFields(this.handleSubmit);

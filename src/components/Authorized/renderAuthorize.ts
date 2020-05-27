@@ -3,11 +3,16 @@
 let CURRENT: string | string[] = 'NULL';
 
 type CurrentAuthorityType = string | string[] | (() => typeof CURRENT);
+
+type RenderAuthorizeFuncType = <T>(
+    Authorized: T
+) => (currentAuthority: CurrentAuthorityType) => T;
+
 /**
  * use  authority or getAuthority
  * @param {string|()=>String} currentAuthority
  */
-const renderAuthorize = <T>(
+const renderAuthorize: RenderAuthorizeFuncType = <T>(
     Authorized: T
 ): ((currentAuthority: CurrentAuthorityType) => T) => (
     currentAuthority: CurrentAuthorityType
@@ -29,4 +34,5 @@ const renderAuthorize = <T>(
 };
 
 export { CURRENT };
-export default <T>(Authorized: T) => renderAuthorize<T>(Authorized);
+export default <T>(Authorized: T): ((currentAuthority: CurrentAuthorityType) => T) =>
+    renderAuthorize<T>(Authorized);

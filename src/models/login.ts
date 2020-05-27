@@ -1,20 +1,21 @@
-import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import { stringify } from 'querystring';
+import { Reducer } from 'redux';
 import { router } from 'umi';
 import { RequestResponse } from 'umi-request';
+
 import {
     login,
-    register,
     LoginRequestBody,
-    RegisterRequestBody,
     LoginResponseBody,
+    register,
+    RegisterRequestBody,
     RegisterResponseBody
 } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
-export interface StateType {
+export interface LoginModelState {
     status?: 'ok' | 'error';
     type?: string;
     currentAuthority?: 'user' | 'guest' | 'admin';
@@ -23,7 +24,7 @@ export interface StateType {
 
 export interface LoginModelType {
     namespace: string;
-    state: StateType;
+    state: LoginModelState;
     effects: {
         login: (
             { payload }: { type: string; payload: LoginRequestBody },
@@ -36,7 +37,7 @@ export interface LoginModelType {
         logout: Effect;
     };
     reducers: {
-        changeLoginStatus: Reducer<StateType>;
+        changeLoginStatus: Reducer<LoginModelState>;
     };
 }
 
@@ -48,6 +49,7 @@ const Model: LoginModelType = {
     },
 
     effects: {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *login(
             { payload }: { type: string; payload: LoginRequestBody },
             { call }: { call: Function }
@@ -80,6 +82,7 @@ const Model: LoginModelType = {
             }
         },
 
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *register(
             { payload }: { type: string; payload: RegisterRequestBody },
             { call }: { call: Function }
@@ -110,7 +113,7 @@ const Model: LoginModelType = {
                 router.replace(redirect || '/');
             }
         },
-        logout() {
+        logout(): void {
             const { redirect } = getPageQuery();
             // Note: There may be security issues, please note
             if (window.location.pathname !== '/user/login' && !redirect) {
@@ -125,7 +128,7 @@ const Model: LoginModelType = {
     },
 
     reducers: {
-        changeLoginStatus(state, { payload }) {
+        changeLoginStatus(state, { payload }): LoginModelState {
             setAuthority('admin');
             return {
                 ...state,

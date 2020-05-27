@@ -1,6 +1,6 @@
-import React from 'react';
-import { Card, Typography, Alert, Icon } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { Alert, Card, Icon, Typography } from 'antd';
+import React from 'react';
 
 export default (): React.ReactNode => (
     <PageHeaderWrapper content=" 这个页面只有 admin 权限才能查看">

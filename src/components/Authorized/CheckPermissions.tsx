@@ -1,7 +1,8 @@
 import React from 'react';
-import { CURRENT } from './renderAuthorize';
+
 // eslint-disable-next-line import/no-cycle
 import PromiseRender from './PromiseRender';
+import { CURRENT } from './renderAuthorize';
 
 export type IAuthorityType =
     | undefined
@@ -59,6 +60,7 @@ const checkPermissions = <T, K>(
     }
     // Function 处理
     if (typeof authority === 'function') {
+        // eslint-disable-next-line no-useless-catch
         try {
             const bool = authority(currentAuthority);
             // 函数执行后返回值是 Promise

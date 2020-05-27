@@ -1,13 +1,13 @@
+import React from 'react';
 import { Redirect, Route } from 'umi';
 
-import React from 'react';
 import Authorized from './Authorized';
 import { IAuthorityType } from './CheckPermissions';
 
 interface AuthorizedRoutePops {
     currentAuthority: string;
-    component: React.ComponentClass<any, any>;
-    render: (props: any) => React.ReactNode;
+    component: React.ComponentClass<object, object>;
+    render: (props: object) => React.ReactNode;
     redirectPath: string;
     authority: IAuthorityType;
 }
@@ -24,13 +24,15 @@ const AuthorizedRoute: React.SFC<AuthorizedRoutePops> = ({
         noMatch={
             <Route
                 {...rest}
-                render={() => <Redirect to={{ pathname: redirectPath }} />}
+                render={(): JSX.Element => (
+                    <Redirect to={{ pathname: redirectPath }} />
+                )}
             />
         }
     >
         <Route
             {...rest}
-            render={(props: any) =>
+            render={(props: object): React.ReactNode =>
                 Component ? <Component {...props} /> : render(props)
             }
         />

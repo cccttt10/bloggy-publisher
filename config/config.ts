@@ -191,6 +191,6 @@ export default {
     manifest: {
         basePath: '/'
     },
-    proxy: proxy[REACT_APP_ENV || 'dev'],
+    proxy: proxy[(REACT_APP_ENV as 'test' | 'pre') || 'dev'],
     chainWebpack: webpackPlugin
 } as IConfig;

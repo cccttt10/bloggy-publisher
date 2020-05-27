@@ -1,21 +1,23 @@
 import ProLayout, {
-    MenuDataItem,
     BasicLayoutProps as ProLayoutProps,
-    Settings,
-    DefaultFooter
+    DefaultFooter,
+    MenuDataItem,
+    Settings
 } from '@ant-design/pro-layout';
-import React, { useEffect } from 'react';
-import { Link } from 'umi';
-import { Dispatch } from 'redux';
+import { Button, Icon, Result } from 'antd';
+import { Route } from 'antd/lib/breadcrumb/Breadcrumb';
 import { connect } from 'dva';
-import { Icon, Result, Button } from 'antd';
+import cookieChecker from 'js-cookie';
+import React, { ReactNode, useEffect } from 'react';
+import { Dispatch } from 'redux';
+import { Link } from 'umi';
 import { formatMessage } from 'umi-plugin-react/locale';
 
-import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
-import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
-import cookieChecker from 'js-cookie';
+import Authorized from '@/utils/Authorized';
+import { getAuthorityFromRouter, isAntDesignPro } from '@/utils/utils';
+
 import logo from '../assets/logo.svg';
 
 const noMatch = (
@@ -154,14 +156,20 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     return (
         <ProLayout
             logo={logo}
-            menuHeaderRender={(logoDom, titleDom) => (
+            menuHeaderRender={(
+                logoDom: React.ReactNode,
+                titleDom: React.ReactNode
+            ): JSX.Element => (
                 <Link to="/">
                     {logoDom}
                     {titleDom}
                 </Link>
             )}
             onCollapse={handleMenuCollapse}
-            menuItemRender={(menuItemProps, defaultDom) => {
+            menuItemRender={(
+                menuItemProps: MenuDataItem & { isUrl: boolean },
+                defaultDom: ReactNode
+            ): ReactNode => {
                 if (
                     menuItemProps.isUrl ||
                     menuItemProps.children ||
@@ -171,7 +179,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
                 }
                 return <Link to={menuItemProps.path}>{defaultDom}</Link>;
             }}
-            breadcrumbRender={(routers = []) => [
+            breadcrumbRender={(routers: Route[] = []): Route[] => [
                 {
                     path: '/',
                     breadcrumbName: formatMessage({
@@ -181,7 +189,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
                 },
                 ...routers
             ]}
-            itemRender={(route, params, routes, paths) => {
+            itemRender={(
+                route: Route,
+                params,
+                routes: Route[],
+                paths: string[]
+            ): React.ReactNode => {
                 const first = routes.indexOf(route) === 0;
                 return first ? (
                     <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
@@ -192,10 +205,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
             footerRender={footerRender}
             menuDataRender={menuDataRender}
             formatMessage={formatMessage}
-            rightContentRender={() => <RightContent />}
+            rightContentRender={(): JSX.Element => <RightContent />}
             {...props}
             {...settings}
         >
+            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
             <Authorized authority={authorized!.authority} noMatch={noMatch}>
                 {children}
             </Authorized>

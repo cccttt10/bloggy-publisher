@@ -129,7 +129,7 @@ Object.keys(ItemMap).forEach(key => {
                     customProps={item.props}
                     rules={item.rules}
                     {...props}
-                    type={key}
+                    // type={item.props.}
                     {...context}
                     updateActive={context.updateActive}
                 />

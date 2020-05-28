@@ -112,40 +112,9 @@ class Login extends Component<LoginProps, LoginState> {
                                         'user-login.login.message-invalid-credentials'
                                 })
                             )}
-                        <LoginEmail
-                            name="email"
-                            placeholder={`${formatMessage({
-                                id: 'user-login.login.email'
-                            })}: 123@abc.com`}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id: 'user-login.login.email.required'
-                                    })
-                                },
-                                {
-                                    // eslint-disable-next-line no-useless-escape
-                                    pattern: /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/,
-                                    message: formatMessage({
-                                        id: 'user-login.login.email.wrong-format'
-                                    })
-                                }
-                            ]}
-                        />
+                        <LoginEmail name="email" />
                         <LoginPassword
                             name="password"
-                            placeholder={formatMessage({
-                                id: 'user-login.register.password'
-                            })}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id: 'user-login.login.password.required'
-                                    })
-                                }
-                            ]}
                             onPressEnter={(
                                 e: React.KeyboardEvent<HTMLElement>
                             ): void => {
@@ -171,88 +140,13 @@ class Login extends Component<LoginProps, LoginState> {
                                         'user-login.login.message-invalid-verification-code'
                                 })
                             )}
-                        <RegisterEmail
-                            name="email"
-                            placeholder={`${formatMessage({
-                                id: 'user-login.login.email'
-                            })}: 123@abc.com`}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id: 'user-login.login.email.required'
-                                    })
-                                },
-                                {
-                                    // eslint-disable-next-line no-useless-escape
-                                    pattern: /^[A-Za-z0-9]+([_\.][A-Za-z0-9]+)*@([A-Za-z0-9\-]+\.)+[A-Za-z]{2,6}$/,
-                                    message: 'Wrong email format!'
-                                }
-                            ]}
-                        />
-                        <RegisterName
-                            name="name"
-                            placeholder={formatMessage({
-                                id: 'user-login.register.name'
-                            })}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id: 'user-login.register.name.required'
-                                    })
-                                },
-                                {
-                                    pattern: /\S/,
-                                    message: formatMessage({
-                                        id: 'user-login.register.name.required'
-                                    })
-                                }
-                            ]}
-                        />
-                        <RegisterPhone
-                            name="phone"
-                            placeholder={formatMessage({
-                                id: 'user-login.register.phone'
-                            })}
-                            rules={[
-                                {
-                                    pattern: /^\d+/,
-                                    message: formatMessage({
-                                        id: 'user-login.register.phone.wrong-format'
-                                    })
-                                }
-                            ]}
-                        />
-                        <RegisterPassword
-                            name="password"
-                            placeholder={formatMessage({
-                                id: 'user-login.register.password'
-                            })}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id: 'user-login.register.password.required'
-                                    })
-                                }
-                            ]}
-                        />
+                        <RegisterEmail name="email" />
+                        <RegisterName name="name" />
+                        <RegisterPhone name="phone" />
+                        <RegisterPassword name="password" />
 
                         <RegisterConfirmPassword
                             name="confirmPassword"
-                            placeholder={formatMessage({
-                                id: 'user-login.register.confirmPassword'
-                            })}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: formatMessage({
-                                        id:
-                                            'user-login.register.confirmPassword.required'
-                                    })
-                                }
-                            ]}
                             onPressEnter={(
                                 e: React.KeyboardEvent<HTMLElement>
                             ): void => {

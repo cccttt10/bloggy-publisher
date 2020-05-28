@@ -17,9 +17,7 @@ import { getPageQuery } from '@/utils/utils';
 
 export interface LoginModelState {
     status?: 'ok' | 'error';
-    type?: string;
-    currentAuthority?: 'user' | 'guest' | 'admin';
-    userId?: string;
+    type?: 'login' | 'register';
 }
 
 export interface LoginModelType {
@@ -41,7 +39,7 @@ export interface LoginModelType {
     };
 }
 
-const Model: LoginModelType = {
+const LoginModel: LoginModelType = {
     namespace: 'login',
 
     state: {
@@ -129,15 +127,15 @@ const Model: LoginModelType = {
 
     reducers: {
         changeLoginStatus(state, { payload }): LoginModelState {
+            console.log('in change login status');
             setAuthority('admin');
             return {
                 ...state,
                 status: payload.status,
-                type: payload.type,
-                userId: payload._id
+                type: payload.type
             };
         }
     }
 };
 
-export default Model;
+export default LoginModel;

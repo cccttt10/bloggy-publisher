@@ -1,4 +1,5 @@
 import component from './zh-CN/component';
+import footer from './zh-CN/footer';
 import globalHeader from './zh-CN/globalHeader';
 import menu from './zh-CN/menu';
 import pwa from './zh-CN/pwa';
@@ -13,6 +14,7 @@ export default {
     'app.preview.down.block': '下载此页面到本地项目',
     'app.welcome.link.fetch-blocks': '获取全部区块',
     'app.welcome.link.block-list': '基于 block 开发，快速构建标准页面',
+    ...footer,
     ...globalHeader,
     ...menu,
     ...settingDrawer,

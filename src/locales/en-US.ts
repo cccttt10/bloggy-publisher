@@ -1,4 +1,5 @@
 import component from './en-US/component';
+import footer from './en-US/footer';
 import globalHeader from './en-US/globalHeader';
 import menu from './en-US/menu';
 import pwa from './en-US/pwa';
@@ -14,6 +15,7 @@ export default {
     'app.welcome.link.fetch-blocks': 'Get all block',
     'app.welcome.link.block-list':
         'Quickly build standard, pages based on `block` development',
+    ...footer,
     ...globalHeader,
     ...menu,
     ...settingDrawer,

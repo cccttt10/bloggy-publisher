@@ -4,6 +4,7 @@ import {
     getPageTitle,
     MenuDataItem
 } from '@ant-design/pro-layout';
+import { Icon } from 'antd';
 import { connect } from 'dva';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -56,16 +57,38 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
                         <div className={styles.header}>
                             <Link to="/">
                                 <img alt="logo" className={styles.logo} src={logo} />
-                                <span className={styles.title}>Ant Design</span>
+                                <span className={styles.title}>Bloggy</span>
                             </Link>
                         </div>
                         <div className={styles.desc}>
-                            Ant Design 是西湖区最具影响力的 Web 设计规范
+                            Bloggy 是西湖区最具影响力的博客平台
                         </div>
                     </div>
                     {children}
                 </div>
-                <DefaultFooter />
+                <DefaultFooter
+                    copyright={formatMessage({ id: 'app.footer.copyright' })}
+                    links={[
+                        {
+                            key: 'Bloggy Publisher',
+                            title: 'Bloggy Publisher',
+                            href: '#',
+                            blankTarget: true
+                        },
+                        {
+                            key: 'github',
+                            title: <Icon type="github" />,
+                            href: 'https://github.com/chuntonggao/bloggy',
+                            blankTarget: true
+                        },
+                        {
+                            key: 'Bloggy Reader',
+                            title: 'Bloggy Reader',
+                            href: '#',
+                            blankTarget: true
+                        }
+                    ]}
+                />
             </div>
         </>
     );

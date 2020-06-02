@@ -1,4 +1,4 @@
-import { Alert, Checkbox, Icon } from 'antd';
+import { Checkbox, Icon } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox';
 import { FormComponentProps } from 'antd/es/form';
 import { connect } from 'dva';
@@ -7,10 +7,9 @@ import { AnyAction, Dispatch } from 'redux';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectState } from '@/models/connect';
-import { LoginModelState } from '@/models/login';
 import { LoginRequestBody, RegisterRequestBody } from '@/services/login';
 
-import LoginComponents, { TabType } from './components/Login';
+import LoginComponents, { TabType } from './components';
 import styles from './style.less';
 
 const {
@@ -27,7 +26,6 @@ const {
 
 interface LoginProps {
     dispatch: Dispatch<AnyAction>;
-    userLogin: LoginModelState;
     submitting?: boolean;
 }
 interface LoginState {
@@ -70,22 +68,19 @@ class Login extends Component<LoginProps, LoginState> {
         }
     };
 
+    handlePressEnter = (e: React.KeyboardEvent<HTMLElement>): void => {
+        e.preventDefault();
+        if (this.loginForm) {
+            this.loginForm.validateFields(this.handleSubmit);
+        }
+    };
+
     onTabChange = (activeTab: TabType): void => {
         this.setState({ activeTab });
     };
 
-    renderMessage = (content: string): JSX.Element => (
-        <Alert
-            style={{ marginBottom: 24 }}
-            message={content}
-            type="error"
-            showIcon
-        />
-    );
-
     render(): JSX.Element {
-        const { userLogin = {}, submitting } = this.props;
-        const { status, type: loginType } = userLogin;
+        const { submitting } = this.props;
         const { activeTab, autoLogin } = this.state;
         return (
             <div className={styles.main}>
@@ -103,26 +98,10 @@ class Login extends Component<LoginProps, LoginState> {
                             id: 'user-login.tab.login'
                         })}
                     >
-                        {status === 'error' &&
-                            loginType === 'login' &&
-                            !submitting &&
-                            this.renderMessage(
-                                formatMessage({
-                                    id:
-                                        'user-login.login.message-invalid-credentials'
-                                })
-                            )}
                         <LoginEmail name="email" />
                         <LoginPassword
                             name="password"
-                            onPressEnter={(
-                                e: React.KeyboardEvent<HTMLElement>
-                            ): void => {
-                                e.preventDefault();
-                                if (this.loginForm) {
-                                    this.loginForm.validateFields(this.handleSubmit);
-                                }
-                            }}
+                            onPressEnter={this.handlePressEnter}
                         />
                     </Tab>
                     <Tab
@@ -131,15 +110,6 @@ class Login extends Component<LoginProps, LoginState> {
                             id: 'user-login.tab.register'
                         })}
                     >
-                        {status === 'error' &&
-                            loginType === 'register' &&
-                            !submitting &&
-                            this.renderMessage(
-                                formatMessage({
-                                    id:
-                                        'user-login.login.message-invalid-verification-code'
-                                })
-                            )}
                         <RegisterEmail name="email" />
                         <RegisterName name="name" />
                         <RegisterPhone name="phone" />
@@ -147,14 +117,7 @@ class Login extends Component<LoginProps, LoginState> {
 
                         <RegisterConfirmPassword
                             name="confirmPassword"
-                            onPressEnter={(
-                                e: React.KeyboardEvent<HTMLElement>
-                            ): void => {
-                                e.preventDefault();
-                                if (this.loginForm) {
-                                    this.loginForm.validateFields(this.handleSubmit);
-                                }
-                            }}
+                            onPressEnter={this.handlePressEnter}
                         />
                     </Tab>
                     <div>
@@ -191,7 +154,6 @@ class Login extends Component<LoginProps, LoginState> {
     }
 }
 
-export default connect(({ login, loading }: ConnectState) => ({
-    userLogin: login,
+export default connect(({ loading }: ConnectState) => ({
     submitting: loading.effects['login/login'] || loading.effects['login/register']
 }))(Login);

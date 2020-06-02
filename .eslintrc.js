@@ -24,6 +24,7 @@ module.exports = {
         '@typescript-eslint/ban-types': 'off',
         '@typescript-eslint/explicit-function-return-type': 'warn',
         '@typescript-eslint/interface-name-prefix': 'off',
+        '@typescript-eslint/no-empty-interface': 'off',
         '@typescript-eslint/no-explicit-any': 'error',
         '@typescript-eslint/no-unused-vars': [
             'error',

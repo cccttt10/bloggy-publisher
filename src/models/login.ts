@@ -1,6 +1,5 @@
 import { Effect } from 'dva';
 import { stringify } from 'querystring';
-import { Reducer } from 'redux';
 import { router } from 'umi';
 import { RequestResponse } from 'umi-request';
 
@@ -15,10 +14,7 @@ import {
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
 
-export interface LoginModelState {
-    status?: 'ok' | 'error';
-    type?: 'login' | 'register';
-}
+export interface LoginModelState {}
 
 export interface LoginModelType {
     namespace: string;
@@ -34,17 +30,31 @@ export interface LoginModelType {
         ) => Generator;
         logout: Effect;
     };
-    reducers: {
-        changeLoginStatus: Reducer<LoginModelState>;
-    };
 }
+
+const redirectToHome = (): void => {
+    const urlParams = new URL(window.location.href);
+    const params = getPageQuery();
+    let { redirect } = params as { redirect: string };
+    if (redirect) {
+        const redirectUrlParams = new URL(redirect);
+        if (redirectUrlParams.origin === urlParams.origin) {
+            redirect = redirect.substr(urlParams.origin.length);
+            if (redirect.match(/^\/.*#/)) {
+                redirect = redirect.substr(redirect.indexOf('#') + 1);
+            }
+        } else {
+            window.location.href = '/';
+            return;
+        }
+    }
+    router.replace(redirect || '/');
+};
 
 const LoginModel: LoginModelType = {
     namespace: 'login',
 
-    state: {
-        status: undefined
-    },
+    state: {},
 
     effects: {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -60,23 +70,8 @@ const LoginModel: LoginModelType = {
 
             // login successful
             if (loginResponseBody) {
-                const urlParams = new URL(window.location.href);
-                const params = getPageQuery();
-                let { redirect } = params as { redirect: string };
-                if (redirect) {
-                    const redirectUrlParams = new URL(redirect);
-                    if (redirectUrlParams.origin === urlParams.origin) {
-                        redirect = redirect.substr(urlParams.origin.length);
-                        if (redirect.match(/^\/.*#/)) {
-                            redirect = redirect.substr(redirect.indexOf('#') + 1);
-                        }
-                    } else {
-                        window.location.href = '/';
-                        return;
-                    }
-                }
-
-                router.replace(redirect || '/');
+                setAuthority('admin');
+                redirectToHome();
             }
         },
 
@@ -93,24 +88,11 @@ const LoginModel: LoginModelType = {
 
             // register successful
             if (registerResponseBody) {
-                const urlParams = new URL(window.location.href);
-                const params = getPageQuery();
-                let { redirect } = params as { redirect: string };
-                if (redirect) {
-                    const redirectUrlParams = new URL(redirect);
-                    if (redirectUrlParams.origin === urlParams.origin) {
-                        redirect = redirect.substr(urlParams.origin.length);
-                        if (redirect.match(/^\/.*#/)) {
-                            redirect = redirect.substr(redirect.indexOf('#') + 1);
-                        }
-                    } else {
-                        window.location.href = '/';
-                        return;
-                    }
-                }
-                router.replace(redirect || '/');
+                setAuthority('admin');
+                redirectToHome();
             }
         },
+
         logout(): void {
             const { redirect } = getPageQuery();
             // Note: There may be security issues, please note
@@ -122,18 +104,6 @@ const LoginModel: LoginModelType = {
                     })
                 });
             }
-        }
-    },
-
-    reducers: {
-        changeLoginStatus(state, { payload }): LoginModelState {
-            console.log('in change login status');
-            setAuthority('admin');
-            return {
-                ...state,
-                status: payload.status,
-                type: payload.type
-            };
         }
     }
 };

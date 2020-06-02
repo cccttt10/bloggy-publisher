@@ -2,10 +2,7 @@ import { IConfig, IPlugin } from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
-import proxy from './proxy';
 import webpackPlugin from './plugin.config';
-
-const { pwa } = defaultSettings;
 
 // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
@@ -37,21 +34,7 @@ const plugins: IPlugin[] = [
                 loadingComponent: './components/PageLoading/index',
                 webpackChunkName: true,
                 level: 3
-            },
-            pwa: pwa
-                ? {
-                      workboxPluginMode: 'InjectManifest',
-                      workboxOptions: {
-                          importWorkboxFrom: 'local'
-                      }
-                  }
-                : false
-            // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
-            // dll features https://webpack.js.org/plugins/dll-plugin/
-            // dll: {
-            //   include: ['dva', 'dva/router', 'dva/saga', 'dva/fetch'],
-            //   exclude: ['@babel/runtime', 'netlify-lambda'],
-            // },
+            }
         }
     ],
     [
@@ -191,6 +174,5 @@ export default {
     manifest: {
         basePath: '/'
     },
-    proxy: proxy[(REACT_APP_ENV as 'test' | 'pre') || 'dev'],
     chainWebpack: webpackPlugin
 } as IConfig;

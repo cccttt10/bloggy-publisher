@@ -1,7 +1,6 @@
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import { Alert, Card, Typography } from 'antd';
 import React from 'react';
-import { FormattedMessage } from 'umi-plugin-react/locale';
 
 import styles from './Welcome.less';
 
@@ -17,7 +16,7 @@ export default (): React.ReactNode => (
     <PageHeaderWrapper>
         <Card>
             <Alert
-                message="umi ui 现已发布，点击右下角 umi 图标即可使用"
+                message="This is a welcome page, only visible to logged in users"
                 type="success"
                 showIcon
                 banner
@@ -27,47 +26,32 @@ export default (): React.ReactNode => (
                 }}
             />
             <Typography.Text strong>
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://pro.ant.design/docs/block"
-                >
-                    <FormattedMessage
-                        id="app.welcome.link.block-list"
-                        defaultMessage="基于 block 开发，快速构建标准页面"
-                    />
-                </a>
+                Start the front end in development
             </Typography.Text>
-            <CodePreview> npm run ui</CodePreview>
+            <CodePreview> npm run start:dev</CodePreview>
+            <Typography.Text strong>
+                Fix auto-fixable code style problems
+            </Typography.Text>
+            <CodePreview> npm run lint:fix</CodePreview>
             <Typography.Text
                 strong
                 style={{
                     marginBottom: 12
                 }}
             >
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://pro.ant.design/docs/available-script#npm-run-fetchblocks"
-                >
-                    <FormattedMessage
-                        id="app.welcome.link.fetch-blocks"
-                        defaultMessage="获取全部区块"
-                    />
-                </a>
+                Check code style, lint rules and TypeScript compilation
             </Typography.Text>
-            <CodePreview> npm run fetch:blocks</CodePreview>
+            <CodePreview> npm run lint</CodePreview>
         </Card>
         <p style={{ textAlign: 'center', marginTop: 24 }}>
-            Want to add more pages? Please refer to{' '}
+            More questions? Please refer to{' '}
             <a
-                href="https://pro.ant.design/docs/block-cn"
+                href="https://github.com/chuntonggao/bloggy-publisher/blob/master/README.md"
                 target="_blank"
                 rel="noopener noreferrer"
             >
-                use block
+                README
             </a>
-            。
         </p>
     </PageHeaderWrapper>
 );

@@ -1,10 +1,7 @@
 import component from './en-US/component';
 import footer from './en-US/footer';
-import globalHeader from './en-US/globalHeader';
-import menu from './en-US/menu';
-import pwa from './en-US/pwa';
+import request from './en-US/request';
 import settingDrawer from './en-US/settingDrawer';
-import settings from './en-US/settings';
 
 export default {
     'navBar.lang': 'Languages',
@@ -15,11 +12,8 @@ export default {
     'app.welcome.link.fetch-blocks': 'Get all block',
     'app.welcome.link.block-list':
         'Quickly build standard, pages based on `block` development',
+    ...component,
     ...footer,
-    ...globalHeader,
-    ...menu,
-    ...settingDrawer,
-    ...settings,
-    ...pwa,
-    ...component
+    ...request,
+    ...settingDrawer
 };

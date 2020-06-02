@@ -78,3 +78,7 @@ To better understand the project structure:
 -   In `src/models/`, I see `reducers` as well as `effects`. I know `reducers` from redux tutorials, but what are `effects`?
 
 > In redux, `reducers` are **pure functions** that takes a previous state and an action, and returns the next state. However, communication with the back end is asynchronous and produces side effects, which means it is **impure**. `effects` are APIs provided by `dva` (a framework that integrates redux and redux-saga) that convert side effects into pure functions. For more information: [dva concepts](https://dvajs.com/guide/concepts.html#effect)
+
+-   How do login and authentication work?
+
+> We use JSON web tokens as our authentication mechanism. [This article](https://zhuanlan.zhihu.com/p/63061864) explains how JWT works. Basically, the server will grant the user a token upon successful login or registration. A user needs to send this token every time they want to access a protected route. For example, a user needs to provide a token if they want to delete their own article. With the correct token, the server can authenticate that the user is indeed the author of the article and authorize the deletion. In contrast, if a user wants to simply read an article through the `GET` method, no token is needed because anyone (even not logged in) can read articles.

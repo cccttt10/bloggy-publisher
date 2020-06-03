@@ -1,5 +1,6 @@
 export default {
     'account.avatar': 'Avatar URL',
+    'account.avatar-title': 'Avatar',
     'account.bio': 'Bio',
     'account.bio.placeholder': 'This person is too lazy to write a bio.',
     'account.change-avatar': 'Change Avatar',

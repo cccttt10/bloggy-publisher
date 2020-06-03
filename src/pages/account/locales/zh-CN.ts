@@ -1,5 +1,6 @@
 export default {
     'account.avatar': '头像图地址',
+    'account.avatar-title': '头像',
     'account.bio': '自我介绍',
     'account.bio.placeholder': '这个人很懒，什么也没留下。',
     'account.change-avatar': '更换头像',

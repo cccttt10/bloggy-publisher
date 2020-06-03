@@ -15,7 +15,9 @@ interface AvatarViewProps {
 }
 const AvatarView: FC<AvatarViewProps> = (props: AvatarViewProps) => (
     <Fragment>
-        <div className={styles.avatar_title}>Avatar</div>
+        <div className={styles.avatar_title}>
+            <FormattedMessage id="account.avatar-title" />
+        </div>
         <div className={styles.avatar}>
             <img src={props.avatarUrl} alt="avatar" />
         </div>

@@ -1,3 +1,4 @@
+import cookieChecker from 'js-cookie';
 import { RequestResponse } from 'umi-request';
 
 import { getCurrentUser, GetCurrentUserResponseBody } from '@/services/user';
@@ -67,6 +68,8 @@ const UserModel: UserModelType = {
                     type: 'saveCurrentUser',
                     payload: getCurrentUserResponseBody.user as CurrentUser
                 });
+            } else {
+                cookieChecker.remove('jwt');
             }
         }
     },

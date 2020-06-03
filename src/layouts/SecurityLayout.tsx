@@ -31,7 +31,6 @@ class SecurityLayout extends React.Component<
         const isLogin: boolean =
             typeof cookieChecker.get('jwt') === 'string' &&
             (cookieChecker.get('jwt') as string).length > 0;
-
         if (isLogin && dispatch) {
             dispatch({
                 type: 'user/getCurrentUser'

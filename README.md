@@ -58,6 +58,10 @@ To better understand the project structure:
 
 -   Make use of type declarations. The return type and parameter types reveal a lot about a function.
 
+## Collaboration & Version Control
+
+Please do **not** make changes to the `master` branch because you do not have push access to `master`. Instead, make a new branch from the latest commit of `master`, make changes in the new branch and submit a pull request once done. I will merge your changes to `master`.
+
 ## Project Dependencies
 
 -   react: main framework

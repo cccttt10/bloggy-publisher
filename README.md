@@ -22,14 +22,15 @@ This repo contains the front-end code for Bloggy's publisher UI.
 ├── models/                                (redux models incl. state, reducers & effects)***
 ├── pages/
 │   ├── 404.tsx
+|   ├── account/                           (account settings page)***
 │   ├── Admin.tsx
 │   ├── Authorized.tsx
 │   ├── Welcome.less
 │   ├── Welcome.tsx 
-│   ├── document.ejs                      (loading page)
-│   └── user/                             (pages related to user activities)
-│       └── login/                        (login page)
-│           ├── components/               (smaller components of login page)
+│   ├── document.ejs                       (loading page)
+│   └── user/                              (pages related to user activities, for now just login and registration)
+│       └── login/                         (login page, also used for registration)
+│           ├── components/                (smaller components of login page)
 │           |   ├── LoginContext.tsx
 │           |   ├── LoginItem.tsx
 │           |   ├── LoginSubmit.tsx
@@ -37,14 +38,14 @@ This repo contains the front-end code for Bloggy's publisher UI.
 │           |   ├── index.less
 │           |   ├── index.tsx
 │           |   └── map.tsx
-│           ├── index.tsx                (main component of login page)***
-│           ├── locales/                 (i18n of login page)
-│           └── style.less               (stylesheet of login page)
-├── services/                            (send requests to server)***
-├── manifest.json                        (meta information about the website)
-├── global.less                          (global styles)
-├── typings.d.ts                         (TypeScript definitions)
-└── utils/                               (utility functions)
+│           ├── index.tsx                 (main component of login page)***
+│           ├── locales/                  (i18n of login page)
+│           └── style.less                (stylesheet of login page)
+├── services/                             (send requests to server)***
+├── manifest.json                         (meta information about the website)
+├── global.less                           (global styles)
+├── typings.d.ts                          (TypeScript definitions)
+└── utils/                                (utility functions)
 </pre>
 
 ## Todo
@@ -70,7 +71,7 @@ To better understand the project structure:
 -   [redux documentation](https://redux.js.org)
 -   [react-redux documentation](documentation)
 -   [dva documentation](https://dvajs.com)
--   [ant design component API](https://ant.design/components/overview/)
+-   [ant design component API](https://3x.ant.design/index-cn) (Note we are using the 3.x version for our project, not the latest 4.x version)
 -   [TypeScript handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)
 
 ## FAQ

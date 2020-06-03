@@ -1,7 +1,15 @@
+import { notification } from 'antd';
 import cookieChecker from 'js-cookie';
+import { formatMessage } from 'umi-plugin-react/locale';
 import { RequestResponse } from 'umi-request';
 
-import { getCurrentUser, GetCurrentUserResponseBody } from '@/services/user';
+import {
+    getCurrentUser,
+    GetCurrentUserResponseBody,
+    updateUser,
+    UpdateUserRequestBody,
+    UpdateUserResponseBody
+} from '@/services/user';
 
 export interface CurrentUser {
     name: string;
@@ -26,6 +34,10 @@ export interface UserModelType {
     effects: {
         getCurrentUser: (
             _: { type: string },
+            { call, put }: { call: Function; put: Function }
+        ) => Generator;
+        updateUser: (
+            { payload }: { type: string; payload: UpdateUserRequestBody },
             { call, put }: { call: Function; put: Function }
         ) => Generator;
     };
@@ -70,6 +82,27 @@ const UserModel: UserModelType = {
                 });
             } else {
                 cookieChecker.remove('jwt');
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *updateUser(
+            { payload }: { type: string; payload: UpdateUserRequestBody },
+            { call, put }: { call: Function; put: Function }
+        ) {
+            const response: RequestResponse<UpdateUserResponseBody> = (yield call(
+                updateUser,
+                payload
+            )) as RequestResponse<UpdateUserResponseBody>;
+            const updateUserResponseBody: UpdateUserResponseBody = response.data;
+            if (updateUserResponseBody) {
+                yield put({
+                    type: 'saveCurrentUser',
+                    payload: updateUserResponseBody.user as CurrentUser
+                });
+                notification.success({
+                    message: formatMessage({ id: 'app.request.requestSuccess' })
+                });
             }
         }
     },

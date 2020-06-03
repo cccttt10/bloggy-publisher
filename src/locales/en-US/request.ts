@@ -26,5 +26,6 @@ export default {
     'app.request.networkErrorLong':
         'Your Internet has a problem. Cannot connect to the server',
     'app.request.networkErrorShort': 'Network error',
-    'app.request.requestError': 'Request error'
+    'app.request.requestError': 'Request error',
+    'app.request.requestSuccess': 'Action completed'
 };

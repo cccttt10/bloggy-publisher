@@ -16,5 +16,6 @@ export default {
     'app.request.504': '网关超时。',
     'app.request.networkErrorLong': '您的网络发生异常，无法连接服务器',
     'app.request.networkErrorShort': '网络异常',
-    'app.request.requestError': '请求错误'
+    'app.request.requestError': '请求错误',
+    'app.request.requestSuccess': '操作成功'
 };

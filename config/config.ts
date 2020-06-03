@@ -114,6 +114,12 @@ export default {
                             ]
                         },
                         {
+                            path: '/account',
+                            name: 'account',
+                            icon: 'user',
+                            component: './account'
+                        },
+                        {
                             component: './404'
                         }
                     ]
@@ -123,7 +129,6 @@ export default {
                 }
             ]
         },
-
         {
             component: './404'
         }

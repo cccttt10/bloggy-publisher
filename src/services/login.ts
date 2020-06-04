@@ -1,5 +1,6 @@
 import { RequestResponse } from 'umi-request';
 
+import { User } from '@/models/user';
 import request from '@/utils/request';
 
 export interface RegisterRequestBody {
@@ -10,18 +11,7 @@ export interface RegisterRequestBody {
 }
 
 export interface RegisterResponseBody {
-    user: {
-        name: string;
-        phone: string;
-        imgUrl: string;
-        email: string;
-        bio: string;
-        avatar: string;
-        location: string;
-        createdOn: Date;
-        updatedOn: Date;
-        _id: string;
-    };
+    user: User;
 }
 
 export function register(
@@ -39,18 +29,7 @@ export interface LoginRequestBody {
 }
 
 export interface LoginResponseBody {
-    user: {
-        name: string;
-        phone: string;
-        imgUrl: string;
-        email: string;
-        bio: string;
-        avatar: string;
-        location: string;
-        createdOn: Date;
-        updatedOn: Date;
-        _id: string;
-    };
+    user: User;
 }
 
 export function login(

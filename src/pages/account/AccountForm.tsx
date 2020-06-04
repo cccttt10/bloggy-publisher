@@ -6,12 +6,12 @@ import { AnyAction, Dispatch } from 'redux';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectState } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { User } from '@/models/user';
 import { UpdateUserRequestBody } from '@/services/user';
 
 interface AccountFormProps {
     form: FormComponentProps['form'];
-    currentUser: CurrentUser;
+    currentUser: User;
     dispatch: Dispatch<AnyAction>;
 }
 

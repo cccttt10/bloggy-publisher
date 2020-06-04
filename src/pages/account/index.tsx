@@ -4,7 +4,7 @@ import React, { Component, FC, Fragment } from 'react';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectState } from '@/models/connect';
-import { CurrentUser } from '@/models/user';
+import { User } from '@/models/user';
 
 import AccountForm from './AccountForm';
 import styles from './index.less';
@@ -31,7 +31,7 @@ const AvatarView: FC<AvatarViewProps> = (props: AvatarViewProps) => (
 );
 
 interface BaseViewProps {
-    currentUser: CurrentUser;
+    currentUser: User;
 }
 
 class BaseView extends Component<BaseViewProps> {

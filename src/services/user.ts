@@ -1,20 +1,10 @@
 import { RequestResponse } from 'umi-request';
 
+import { User } from '@/models/user';
 import request from '@/utils/request';
 
 export interface GetCurrentUserResponseBody {
-    user: {
-        name: string;
-        phone: string;
-        imgUrl: string;
-        email: string;
-        bio: string;
-        avatar: string;
-        location: string;
-        createdOn: Date;
-        updatedOn: Date;
-        _id: string;
-    };
+    user: User;
 }
 
 export function getCurrentUser(): Promise<
@@ -37,18 +27,7 @@ export interface UpdateUserRequestBody {
 }
 
 export interface UpdateUserResponseBody {
-    user: {
-        name: string;
-        phone: string;
-        imgUrl: string;
-        email: string;
-        bio: string;
-        avatar: string;
-        location: string;
-        createdOn: Date;
-        updatedOn: Date;
-        _id: string;
-    };
+    user: User;
 }
 
 export function updateUser(

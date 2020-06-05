@@ -12,6 +12,11 @@ docker
 .editorconfig
 Dockerfile*
 .gitignore
+.gitattributes
+.gitconfig
+**/*.js.map
+build/
+**/*.ejs
 .prettierignore
 LICENSE
 .eslintcache

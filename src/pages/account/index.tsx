@@ -32,6 +32,7 @@ const AvatarView: FC<AvatarViewProps> = (props: AvatarViewProps) => (
 
 interface BaseViewProps {
     currentUser: IUser;
+    // testtest
 }
 
 class BaseView extends Component<BaseViewProps> {

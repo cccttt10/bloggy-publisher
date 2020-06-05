@@ -14,7 +14,7 @@ export default {
     'article.draft': '草稿',
     'article.edit': '编辑',
     'article.imgUrl': '背景图URL',
-    'article.isAboutPage': '设为“关于我”页面',
+    'article.isAboutPage': '设为“关于我”',
     'article.isDraft': '草稿',
     'article.new-article': '新建文章',
     'article.not-implemented': '这个功能还没做好呢。',

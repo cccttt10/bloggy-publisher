@@ -97,7 +97,7 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
     render(): JSX.Element {
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
-            labelCol: { span: 2 },
+            labelCol: { span: 4 },
             wrapperCol: { span: 12 }
         };
         const normalCenter: CSSProperties = {

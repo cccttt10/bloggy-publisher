@@ -75,7 +75,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 />
             );
         } else if (mode === 'edit') {
-            console.log(selectedArticle);
             return (
                 <ArticleDetail
                     type="edit"
@@ -212,7 +211,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                     )
                 }
             ];
-            console.log(articleList);
             return (
                 <Card bordered={false}>
                     <div className="">

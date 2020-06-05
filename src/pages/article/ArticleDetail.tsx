@@ -60,7 +60,6 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
     }
 
     handleSubmit = (e: React.FormEvent): void => {
-        console.log(this.props);
         e.preventDefault();
         this.props.form.validateFields({ force: true }, (err, values) => {
             if (!err) {
@@ -70,7 +69,6 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
                         payload: values as CreateArticleRequestBody
                     });
                 } else if (this.props.type === 'edit') {
-                    console.log('in edit');
                     this.props.dispatch({
                         type: 'article/updateArticle',
                         payload: {

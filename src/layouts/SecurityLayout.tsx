@@ -6,11 +6,11 @@ import React from 'react';
 import { Redirect } from 'umi';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
-import { User } from '@/models/user';
+import { IUser } from '@/models/user';
 
 interface SecurityLayoutProps extends ConnectProps {
     loading?: boolean;
-    currentUser?: User;
+    currentUser?: IUser;
     userId?: string;
 }
 

@@ -6,13 +6,14 @@ import { AnyAction, Dispatch } from 'redux';
 import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectState } from '@/models/connect';
-import { User } from '@/models/user';
+import { IUser } from '@/models/user';
 import { UpdateUserRequestBody } from '@/services/user';
 
 interface AccountFormProps {
     form: FormComponentProps['form'];
-    currentUser: User;
+    currentUser: IUser;
     dispatch: Dispatch<AnyAction>;
+    loading?: boolean;
 }
 
 class AccountForm extends Component<AccountFormProps> {
@@ -126,7 +127,11 @@ class AccountForm extends Component<AccountFormProps> {
                     {getFieldDecorator('confirmPassword')(<Input.Password />)}
                 </Form.Item>
 
-                <Button type="primary" htmlType="submit">
+                <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={this.props.loading}
+                >
                     <FormattedMessage id="account.update" />
                 </Button>
             </Form>

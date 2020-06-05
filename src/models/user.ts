@@ -11,7 +11,7 @@ import {
     UpdateUserResponseBody
 } from '@/services/user';
 
-export interface User {
+export interface IUser {
     name: string;
     phone: string;
     imgUrl: string;
@@ -25,7 +25,7 @@ export interface User {
 }
 
 export interface UserModelState {
-    currentUser: User;
+    currentUser: IUser;
 }
 
 export interface UserModelType {
@@ -44,7 +44,7 @@ export interface UserModelType {
     reducers: {
         saveCurrentUser: (
             state: UserModelState,
-            { payload }: { type: string; payload: User }
+            { payload }: { type: string; payload: IUser }
         ) => UserModelState;
     };
 }
@@ -78,7 +78,7 @@ const UserModel: UserModelType = {
             if (getCurrentUserResponseBody) {
                 yield put({
                     type: 'saveCurrentUser',
-                    payload: getCurrentUserResponseBody.user as User
+                    payload: getCurrentUserResponseBody.user as IUser
                 });
             } else {
                 cookieChecker.remove('jwt');
@@ -98,7 +98,7 @@ const UserModel: UserModelType = {
             if (updateUserResponseBody) {
                 yield put({
                     type: 'saveCurrentUser',
-                    payload: updateUserResponseBody.user as User
+                    payload: updateUserResponseBody.user as IUser
                 });
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
@@ -110,7 +110,7 @@ const UserModel: UserModelType = {
     reducers: {
         saveCurrentUser(
             state: UserModelState,
-            { payload }: { type: string; payload: User }
+            { payload }: { type: string; payload: IUser }
         ): UserModelState {
             return {
                 ...state,

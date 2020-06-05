@@ -120,6 +120,12 @@ export default {
                             component: './account'
                         },
                         {
+                            path: '/articles',
+                            name: 'articles',
+                            icon: 'file-markdown',
+                            component: './article'
+                        },
+                        {
                             component: './404'
                         }
                     ]

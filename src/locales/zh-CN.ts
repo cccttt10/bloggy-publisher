@@ -1,5 +1,6 @@
 import component from './zh-CN/component';
 import footer from './zh-CN/footer';
+import menu from './zh-CN/menu';
 import request from './zh-CN/request';
 import settingDrawer from './zh-CN/settingDrawer';
 
@@ -13,6 +14,7 @@ export default {
     'app.welcome.link.block-list': '基于 block 开发，快速构建标准页面',
     ...component,
     ...footer,
+    ...menu,
     ...request,
     ...settingDrawer
 };

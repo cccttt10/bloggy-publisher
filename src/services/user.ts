@@ -1,10 +1,10 @@
 import { RequestResponse } from 'umi-request';
 
-import { User } from '@/models/user';
+import { IUser } from '@/models/user';
 import request from '@/utils/request';
 
 export interface GetCurrentUserResponseBody {
-    user: User;
+    user: IUser;
 }
 
 export function getCurrentUser(): Promise<
@@ -27,7 +27,7 @@ export interface UpdateUserRequestBody {
 }
 
 export interface UpdateUserResponseBody {
-    user: User;
+    user: IUser;
 }
 
 export function updateUser(

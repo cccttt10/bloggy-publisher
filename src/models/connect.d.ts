@@ -3,6 +3,8 @@ import { AnyAction } from 'redux';
 import { RouterTypes } from 'umi';
 
 import { DefaultSettings as SettingModelState } from '../../config/defaultSettings';
+import { ArticleModelState } from './article';
+import { CategoryModelState } from './category';
 import { GlobalModelState } from './global';
 import { LoginModelState } from './login';
 import { UserModelState } from './user';
@@ -18,6 +20,8 @@ export interface Loading {
         setting?: boolean;
         user?: boolean;
         login?: boolean;
+        article?: boolean;
+        category?: boolean;
     };
 }
 
@@ -27,6 +31,8 @@ export interface ConnectState {
     settings: SettingModelState;
     user: UserModelState;
     login: LoginModelState;
+    article: ArticleModelState;
+    category: CategoryModelState;
 }
 
 export interface Route extends MenuDataItem {

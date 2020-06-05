@@ -1,5 +1,6 @@
 import component from './en-US/component';
 import footer from './en-US/footer';
+import menu from './en-US/menu';
 import request from './en-US/request';
 import settingDrawer from './en-US/settingDrawer';
 
@@ -14,6 +15,7 @@ export default {
         'Quickly build standard, pages based on `block` development',
     ...component,
     ...footer,
+    ...menu,
     ...request,
     ...settingDrawer
 };

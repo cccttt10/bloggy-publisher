@@ -38,6 +38,8 @@ module.exports = {
         'eqeqeq': 'error',
         'max-lines': ['warn', 200],
         'no-console': 'warn',
+        'no-else-return': 'off',
+        'no-restricted-syntax': 'off',
         'no-trailing-spaces': 'error',
         'no-underscore-dangle': 'off',
         'no-unused-vars': [

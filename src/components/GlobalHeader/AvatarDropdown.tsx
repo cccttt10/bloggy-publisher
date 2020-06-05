@@ -6,13 +6,13 @@ import { router } from 'umi';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectProps, ConnectState } from '@/models/connect';
-import { User } from '@/models/user';
+import { IUser } from '@/models/user';
 
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
 export interface GlobalHeaderRightProps extends ConnectProps {
-    currentUser?: User;
+    currentUser?: IUser;
     menu?: boolean;
 }
 
@@ -46,7 +46,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
                     <Menu.Item key="center">
                         <Icon type="user" />
                         <FormattedMessage
-                            id="menu.account.center"
+                            id="menu.avatar.center"
                             defaultMessage="account center"
                         />
                     </Menu.Item>
@@ -55,7 +55,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
                     <Menu.Item key="settings">
                         <Icon type="setting" />
                         <FormattedMessage
-                            id="menu.account.settings"
+                            id="menu.avatar.settings"
                             defaultMessage="account settings"
                         />
                     </Menu.Item>
@@ -64,10 +64,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
 
                 <Menu.Item key="logout">
                     <Icon type="logout" />
-                    <FormattedMessage
-                        id="menu.account.logout"
-                        defaultMessage="logout"
-                    />
+                    <FormattedMessage id="menu.avatar.logout" />
                 </Menu.Item>
             </Menu>
         );

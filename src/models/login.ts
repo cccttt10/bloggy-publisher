@@ -66,7 +66,7 @@ const LoginModel: LoginModelType = {
                 login,
                 payload
             )) as RequestResponse<LoginResponseBody>;
-            const loginResponseBody: LoginResponseBody = response.data;
+            const loginResponseBody: LoginResponseBody = response?.data;
 
             // login successful
             if (loginResponseBody) {
@@ -84,7 +84,7 @@ const LoginModel: LoginModelType = {
                 register,
                 payload
             )) as RequestResponse<RegisterResponseBody>;
-            const registerResponseBody: RegisterResponseBody = response.data;
+            const registerResponseBody: RegisterResponseBody = response?.data;
 
             // register successful
             if (registerResponseBody) {

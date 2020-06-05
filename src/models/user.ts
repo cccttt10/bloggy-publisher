@@ -74,7 +74,7 @@ const UserModel: UserModelType = {
                 getCurrentUser
             )) as RequestResponse<GetCurrentUserResponseBody>;
             const getCurrentUserResponseBody: GetCurrentUserResponseBody =
-                response.data;
+                response?.data;
             if (getCurrentUserResponseBody) {
                 yield put({
                     type: 'saveCurrentUser',
@@ -94,7 +94,7 @@ const UserModel: UserModelType = {
                 updateUser,
                 payload
             )) as RequestResponse<UpdateUserResponseBody>;
-            const updateUserResponseBody: UpdateUserResponseBody = response.data;
+            const updateUserResponseBody: UpdateUserResponseBody = response?.data;
             if (updateUserResponseBody) {
                 yield put({
                     type: 'saveCurrentUser',

@@ -109,7 +109,7 @@ const ArticleModel: ArticleModelType = {
                 payload
             )) as RequestResponse<CreateArticleResponseBody>;
             const createArticleResponseBody: CreateArticleResponseBody =
-                response.data;
+                response?.data;
             if (createArticleResponseBody) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
@@ -129,7 +129,7 @@ const ArticleModel: ArticleModelType = {
                 payload
             )) as RequestResponse<GetArticleListResponseBody>;
             const getArticleListResponseBody: GetArticleListResponseBody =
-                response.data;
+                response?.data;
             if (getArticleListResponseBody) {
                 yield put({
                     type: 'saveArticleList',
@@ -148,7 +148,7 @@ const ArticleModel: ArticleModelType = {
                 payload
             )) as RequestResponse<UpdateArticleResponseBody>;
             const updateArticleResponseBody: UpdateArticleResponseBody =
-                response.data;
+                response?.data;
             if (updateArticleResponseBody) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })

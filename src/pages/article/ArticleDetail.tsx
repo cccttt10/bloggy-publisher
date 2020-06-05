@@ -214,7 +214,7 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
 
                 <div
                     title={formatMessage({ id: 'article.content' })}
-                    style={{ width: '1200px' }}
+                    // style={{ width: '1200px' }}
                 >
                     <textarea
                         id="editor"

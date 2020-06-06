@@ -68,3 +68,18 @@ export function updateArticle(
         data: params
     });
 }
+
+export interface DeleteArticleRequestBody {
+    _id: IArticle['_id'];
+}
+
+export interface DeleteArticleResponseBody {}
+
+export function deleteArticle(
+    params: DeleteArticleRequestBody
+): Promise<RequestResponse<DeleteArticleResponseBody>> {
+    return request('http://localhost:3300/deleteArticle', {
+        method: 'POST',
+        data: params
+    });
+}

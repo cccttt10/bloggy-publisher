@@ -7,6 +7,9 @@ import {
     createArticle,
     CreateArticleRequestBody,
     CreateArticleResponseBody,
+    deleteArticle,
+    DeleteArticleRequestBody,
+    DeleteArticleResponseBody,
     getArticleList,
     GetArticleListRequestBody,
     GetArticleListResponseBody,
@@ -82,6 +85,10 @@ export interface ArticleModelType {
             { payload }: { type: string; payload: UpdateArticleRequestBody },
             { call }: { call: Function }
         ) => Generator;
+        deleteArticle: (
+            { payload }: { type: string; payload: DeleteArticleRequestBody },
+            { call }: { call: Function }
+        ) => Generator;
     };
     reducers: {
         saveArticleList: (
@@ -115,7 +122,6 @@ const ArticleModel: ArticleModelType = {
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
                 router.push('/');
-                router.push('/articles');
             }
         },
 
@@ -153,7 +159,24 @@ const ArticleModel: ArticleModelType = {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
-                router.push('/articles');
+                router.push('/');
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *deleteArticle(
+            { payload }: { type: string; payload: DeleteArticleRequestBody },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<DeleteArticleResponseBody> = (yield call(
+                deleteArticle,
+                payload
+            )) as RequestResponse<DeleteArticleResponseBody>;
+
+            if (response?.response.ok === true) {
+                notification.success({
+                    message: formatMessage({ id: 'app.request.requestSuccess' })
+                });
                 router.push('/');
             }
         }

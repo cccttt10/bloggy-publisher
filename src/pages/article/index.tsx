@@ -8,7 +8,10 @@ import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 import { emptyArticle, IArticle } from '@/models/article';
 import { ConnectState } from '@/models/connect';
 import { IUser } from '@/models/user';
-import { GetArticleListRequestBody } from '@/services/article';
+import {
+    DeleteArticleRequestBody,
+    GetArticleListRequestBody
+} from '@/services/article';
 
 import ArticleDetail from './ArticleDetail';
 import ArticleListToolbar from './ArticleListToolbar';
@@ -31,6 +34,10 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
     state = { mode: 'list' as Mode, selectedArticle: emptyArticle };
 
     componentDidMount(): void {
+        this.fetchArticleList();
+    }
+
+    fetchArticleList = (): void => {
         this.props.dispatch({
             type: 'article/getArticleList',
             payload: {
@@ -38,7 +45,7 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 isVisitor: false
             } as GetArticleListRequestBody
         });
-    }
+    };
 
     setMode = (mode: Mode): void => {
         this.setState({ mode });
@@ -50,9 +57,10 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
         });
     };
 
-    handleDelete = (): void => {
-        notification.info({
-            message: formatMessage({ id: 'article.not-implemented' })
+    handleDelete = (articleId: IArticle['_id']): void => {
+        this.props.dispatch({
+            type: 'article/deleteArticle',
+            payload: { _id: articleId } as DeleteArticleRequestBody
         });
     };
 
@@ -200,7 +208,7 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                                 title={formatMessage({
                                     id: 'article.confirm-delete'
                                 })}
-                                onConfirm={this.handleDelete}
+                                onConfirm={(): void => this.handleDelete(record._id)}
                             >
                                 {/* eslint-disable-next-line no-script-url */}
                                 <a href="javascript:;">

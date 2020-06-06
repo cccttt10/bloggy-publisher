@@ -35,10 +35,10 @@ interface BackgroundViewProps {
 }
 const BackgroundView: FC<BackgroundViewProps> = (props: BackgroundViewProps) => (
     <Fragment>
-        <div className={styles.avatar_title}>
+        <div className={styles.background_title}>
             <FormattedMessage id="account.background-title" />
         </div>
-        <div className={styles.avatar}>
+        <div className={styles.background}>
             <img src={props.backgroundUrl} alt="background" />
         </div>
 
@@ -63,7 +63,7 @@ class BaseView extends Component<BaseViewProps> {
         return 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
     }
 
-    getBackgrounURL(): string {
+    getBackgroundURL(): string {
         const { currentUser } = this.props;
         if (currentUser.imgUrl) {
             return currentUser.imgUrl;
@@ -79,7 +79,7 @@ class BaseView extends Component<BaseViewProps> {
                 </div>
                 <div className={styles.right}>
                     <AvatarView avatarUrl={this.getAvatarURL()} />
-                    <BackgroundView backgroundUrl={this.getBackgrounURL()} />
+                    <BackgroundView backgroundUrl={this.getBackgroundURL()} />
                 </div>
             </div>
         );

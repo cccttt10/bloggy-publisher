@@ -2,6 +2,7 @@ import ProLayout, {
     BasicLayoutProps as ProLayoutProps,
     DefaultFooter,
     MenuDataItem,
+    SettingDrawer,
     Settings
 } from '@ant-design/pro-layout';
 import { Button, Icon, Result } from 'antd';
@@ -154,66 +155,78 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     };
 
     return (
-        <ProLayout
-            logo={logo}
-            menuHeaderRender={(
-                logoDom: React.ReactNode,
-                titleDom: React.ReactNode
-            ): JSX.Element => (
-                <Link to="/">
-                    {logoDom}
-                    {titleDom}
-                </Link>
-            )}
-            onCollapse={handleMenuCollapse}
-            menuItemRender={(
-                menuItemProps: MenuDataItem & { isUrl: boolean },
-                defaultDom: ReactNode
-            ): ReactNode => {
-                if (
-                    menuItemProps.isUrl ||
-                    menuItemProps.children ||
-                    !menuItemProps.path
-                ) {
-                    return defaultDom;
-                }
-                return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-            }}
-            breadcrumbRender={(routers: Route[] = []): Route[] => [
-                {
-                    path: '/',
-                    breadcrumbName: formatMessage({
-                        id: 'menu.home',
-                        defaultMessage: 'Home'
+        <React.Fragment>
+            <ProLayout
+                logo={logo}
+                menuHeaderRender={(
+                    logoDom: React.ReactNode,
+                    titleDom: React.ReactNode
+                ): JSX.Element => (
+                    <Link to="/">
+                        {logoDom}
+                        {titleDom}
+                    </Link>
+                )}
+                onCollapse={handleMenuCollapse}
+                menuItemRender={(
+                    menuItemProps: MenuDataItem & { isUrl: boolean },
+                    defaultDom: ReactNode
+                ): ReactNode => {
+                    if (
+                        menuItemProps.isUrl ||
+                        menuItemProps.children ||
+                        !menuItemProps.path
+                    ) {
+                        return defaultDom;
+                    }
+                    return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+                }}
+                breadcrumbRender={(routers: Route[] = []): Route[] => [
+                    {
+                        path: '/',
+                        breadcrumbName: formatMessage({
+                            id: 'menu.home',
+                            defaultMessage: 'Home'
+                        })
+                    },
+                    ...routers
+                ]}
+                itemRender={(
+                    route: Route,
+                    params,
+                    routes: Route[],
+                    paths: string[]
+                ): React.ReactNode => {
+                    const first = routes.indexOf(route) === 0;
+                    return first ? (
+                        <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+                    ) : (
+                        <span>{route.breadcrumbName}</span>
+                    );
+                }}
+                footerRender={footerRender}
+                menuDataRender={menuDataRender}
+                formatMessage={formatMessage}
+                rightContentRender={(): JSX.Element => <RightContent />}
+                {...props}
+                {...settings}
+            >
+                {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+                <Authorized authority={authorized!.authority} noMatch={noMatch}>
+                    {children}
+                </Authorized>
+            </ProLayout>
+            <SettingDrawer
+                settings={settings}
+                // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+                onSettingChange={config =>
+                    dispatch({
+                        type: 'settings/changeSetting',
+                        payload: config
                     })
-                },
-                ...routers
-            ]}
-            itemRender={(
-                route: Route,
-                params,
-                routes: Route[],
-                paths: string[]
-            ): React.ReactNode => {
-                const first = routes.indexOf(route) === 0;
-                return first ? (
-                    <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-                ) : (
-                    <span>{route.breadcrumbName}</span>
-                );
-            }}
-            footerRender={footerRender}
-            menuDataRender={menuDataRender}
-            formatMessage={formatMessage}
-            rightContentRender={(): JSX.Element => <RightContent />}
-            {...props}
-            {...settings}
-        >
-            {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
-            <Authorized authority={authorized!.authority} noMatch={noMatch}>
-                {children}
-            </Authorized>
-        </ProLayout>
+                }
+            />
+        </React.Fragment>
     );
 };
 

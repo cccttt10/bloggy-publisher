@@ -48,6 +48,7 @@ const plugins: IPlugin[] = [
     ]
 ];
 
+plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 if (isAntDesignProPreview) {
     // 针对 preview.pro.ant.design 的 GA 统计代码
     plugins.push([
@@ -56,7 +57,6 @@ if (isAntDesignProPreview) {
             code: 'UA-72788897-6'
         }
     ]);
-    plugins.push(['umi-plugin-antd-theme', themePluginConfig]);
 }
 
 export default {

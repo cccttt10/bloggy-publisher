@@ -66,7 +66,12 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
                 if (this.props.type === 'create') {
                     this.props.dispatch({
                         type: 'article/createArticle',
-                        payload: values as CreateArticleRequestBody
+                        payload: values as CreateArticleRequestBody,
+                        callback: (success: boolean): void => {
+                            if (success === true) {
+                                this.props.setParentMode('list');
+                            }
+                        }
                     });
                 } else if (this.props.type === 'edit') {
                     this.props.dispatch({
@@ -74,7 +79,12 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
                         payload: {
                             _id: this.props.article._id,
                             updatedFields: values
-                        } as UpdateArticleRequestBody
+                        } as UpdateArticleRequestBody,
+                        callback: (success: boolean): void => {
+                            if (success === true) {
+                                this.props.setParentMode('list');
+                            }
+                        }
                     });
                 }
             }

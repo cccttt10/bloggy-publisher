@@ -49,6 +49,9 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
 
     setMode = (mode: Mode): void => {
         this.setState({ mode });
+        if (mode === 'list') {
+            this.fetchArticleList();
+        }
     };
 
     showComments = (): void => {
@@ -60,8 +63,16 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
     handleDelete = (articleId: IArticle['_id']): void => {
         this.props.dispatch({
             type: 'article/deleteArticle',
-            payload: { _id: articleId } as DeleteArticleRequestBody
+            payload: { _id: articleId } as DeleteArticleRequestBody,
+            callback: (success: boolean): void => {
+                if (success === true) {
+                    this.fetchArticleList();
+                }
+            }
         });
+        if (this.props.loading === false) {
+            this.fetchArticleList();
+        }
     };
 
     handleEdit = (record: IArticle): void => {

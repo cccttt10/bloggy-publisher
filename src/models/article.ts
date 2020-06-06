@@ -1,8 +1,8 @@
 import { notification } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { RequestResponse } from 'umi-request';
-import router from 'umi/router';
 
+// import router from 'umi/router';
 import {
     createArticle,
     CreateArticleRequestBody,
@@ -74,7 +74,14 @@ export interface ArticleModelType {
     state: ArticleModelState;
     effects: {
         createArticle: (
-            { payload }: { type: string; payload: CreateArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: CreateArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) => Generator;
         getArticleList: (
@@ -82,11 +89,25 @@ export interface ArticleModelType {
             { call, put }: { call: Function; put: Function }
         ) => Generator;
         updateArticle: (
-            { payload }: { type: string; payload: UpdateArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: UpdateArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) => Generator;
         deleteArticle: (
-            { payload }: { type: string; payload: DeleteArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) => Generator;
     };
@@ -108,7 +129,14 @@ const ArticleModel: ArticleModelType = {
     effects: {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *createArticle(
-            { payload }: { type: string; payload: CreateArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: CreateArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) {
             const response: RequestResponse<CreateArticleResponseBody> = (yield call(
@@ -121,7 +149,12 @@ const ArticleModel: ArticleModelType = {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
-                router.push('/');
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
             }
         },
 
@@ -146,7 +179,14 @@ const ArticleModel: ArticleModelType = {
 
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *updateArticle(
-            { payload }: { type: string; payload: UpdateArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: UpdateArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) {
             const response: RequestResponse<UpdateArticleResponseBody> = (yield call(
@@ -159,13 +199,25 @@ const ArticleModel: ArticleModelType = {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
-                router.push('/');
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
             }
         },
 
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *deleteArticle(
-            { payload }: { type: string; payload: DeleteArticleRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteArticleRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) {
             const response: RequestResponse<DeleteArticleResponseBody> = (yield call(
@@ -177,7 +229,12 @@ const ArticleModel: ArticleModelType = {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
-                router.push('/');
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
             }
         }
     },

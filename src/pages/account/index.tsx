@@ -30,6 +30,26 @@ const AvatarView: FC<AvatarViewProps> = (props: AvatarViewProps) => (
     </Fragment>
 );
 
+interface BackgroundViewProps {
+    backgroundUrl: string;
+}
+const BackgroundView: FC<BackgroundViewProps> = (props: BackgroundViewProps) => (
+    <Fragment>
+        <div className={styles.avatar_title}>
+            <FormattedMessage id="account.background-title" />
+        </div>
+        <div className={styles.avatar}>
+            <img src={props.backgroundUrl} alt="background" />
+        </div>
+
+        <div className={styles.button_view}>
+            <Button icon="upload">
+                <FormattedMessage id="account.change-background" />
+            </Button>
+        </div>
+    </Fragment>
+);
+
 interface BaseViewProps {
     currentUser: IUser;
 }
@@ -43,6 +63,14 @@ class BaseView extends Component<BaseViewProps> {
         return 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
     }
 
+    getBackgrounURL(): string {
+        const { currentUser } = this.props;
+        if (currentUser.imgUrl) {
+            return currentUser.imgUrl;
+        }
+        return 'https://s17736.pcdn.co/wp-content/uploads/2019/03/jason-leung-479251-unsplash.jpg';
+    }
+
     render(): JSX.Element {
         return (
             <div className={styles.baseView}>
@@ -51,6 +79,7 @@ class BaseView extends Component<BaseViewProps> {
                 </div>
                 <div className={styles.right}>
                     <AvatarView avatarUrl={this.getAvatarURL()} />
+                    <BackgroundView backgroundUrl={this.getBackgrounURL()} />
                 </div>
             </div>
         );

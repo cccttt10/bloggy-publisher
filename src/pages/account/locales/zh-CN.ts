@@ -1,9 +1,11 @@
 export default {
     'account.avatar': '头像图地址',
     'account.avatar-title': '头像',
+    'account.background-title': '背景图',
     'account.bio': '自我介绍',
     'account.bio.placeholder': '这个人很懒，什么也没留下。',
     'account.change-avatar': '更换头像',
+    'account.change-background': '更换背景图',
     'account.email': '邮箱',
     'account.imgUrl': '背景图地址',
     'account.location': '所在地',

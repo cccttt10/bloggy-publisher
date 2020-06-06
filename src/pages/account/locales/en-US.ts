@@ -1,9 +1,11 @@
 export default {
     'account.avatar': 'Avatar URL',
     'account.avatar-title': 'Avatar',
+    'account.background-title': 'background image',
     'account.bio': 'Bio',
     'account.bio.placeholder': 'This person is too lazy to write a bio.',
     'account.change-avatar': 'Change Avatar',
+    'account.change-background': 'Change background',
     'account.confirm-password': 'Confirm password',
     'account.email': 'Email',
     'account.imgUrl': 'Background image URL',

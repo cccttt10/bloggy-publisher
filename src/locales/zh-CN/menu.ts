@@ -4,6 +4,7 @@ export default {
     'menu.admin.sub-page': '二级页面',
     'menu.articles': '文章',
     'menu.avatar.logout': '登出',
+    'menu.categories': '分类标签',
     'menu.home': '主页',
     'menu.welcome': '欢迎'
 };

@@ -6,6 +6,9 @@ import {
     createCategory,
     CreateCategoryRequestBody,
     CreateCategoryResponseBody,
+    deleteCategory,
+    DeleteCategoryRequestBody,
+    DeleteCategoryResponseBody,
     getCategoryList,
     GetCategoryListRequestBody,
     GetCategoryListResponseBody
@@ -31,7 +34,25 @@ export interface CategoryModelType {
     state: CategoryModelState;
     effects: {
         createCategory: (
-            { payload }: { type: string; payload: CreateCategoryRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: CreateCategoryRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) => Generator;
+        deleteCategory: (
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteCategoryRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) => Generator;
         getCategoryList: (
@@ -57,19 +78,59 @@ const categoryModel: CategoryModelType = {
     effects: {
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         *createCategory(
-            { payload }: { type: string; payload: CreateCategoryRequestBody },
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: CreateCategoryRequestBody;
+                callback: (success: boolean) => void;
+            },
             { call }: { call: Function }
         ) {
             const response: RequestResponse<CreateCategoryResponseBody> = (yield call(
                 createCategory,
                 payload
             )) as RequestResponse<CreateCategoryResponseBody>;
-            const createCategoryResponseBody: CreateCategoryResponseBody =
-                response.data;
-            if (createCategoryResponseBody) {
+            if (response?.response.ok === true) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *deleteCategory(
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteCategoryRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<DeleteCategoryResponseBody> = (yield call(
+                deleteCategory,
+                payload
+            )) as RequestResponse<DeleteCategoryResponseBody>;
+            if (response?.response.ok === true) {
+                notification.success({
+                    message: formatMessage({ id: 'app.request.requestSuccess' })
+                });
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
             }
         },
 

@@ -103,17 +103,13 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
             );
         } else {
             // mode === 'list'
-
             const columns = [
                 {
                     title: formatMessage({ id: 'article.title' }),
-
                     dataIndex: 'title'
                 },
-
                 {
                     title: formatMessage({ id: 'article.backgroundImage' }),
-
                     dataIndex: 'imgUrl',
                     render: (imgUrl: IArticle['imgUrl']): JSX.Element => (
                         <Avatar shape="square" src={imgUrl} size={40} icon="user" />
@@ -122,7 +118,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 {
                     title: formatMessage({ id: 'article.categories' }),
                     dataIndex: 'categories',
-
                     render: (categories: IArticle['categories']): JSX.Element => (
                         <span>
                             {categories.map(category => (
@@ -133,11 +128,9 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                         </span>
                     )
                 },
-
                 {
                     title: formatMessage({ id: 'article.state' }),
                     dataIndex: 'isDraft',
-
                     render: (isDraft: IArticle['isDraft']): JSX.Element => {
                         if (isDraft) {
                             return (
@@ -156,7 +149,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 },
                 {
                     title: formatMessage({ id: 'article.views-likes-comments' }),
-
                     dataIndex: 'meta',
                     render: (meta: IArticle['meta']): JSX.Element => (
                         <div>
@@ -166,7 +158,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                         </div>
                     )
                 },
-
                 {
                     title: formatMessage({ id: 'article.createdOn' }),
                     dataIndex: 'createdOn',
@@ -177,7 +168,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                         </span>
                     )
                 },
-
                 {
                     title: formatMessage({ id: 'article.updatedOn' }),
                     dataIndex: 'updatedOn',
@@ -190,7 +180,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 },
                 {
                     title: formatMessage({ id: 'article.operations' }),
-
                     render: (text: string, record: IArticle): JSX.Element => (
                         <div>
                             <Fragment>

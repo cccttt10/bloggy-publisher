@@ -20,6 +20,21 @@ export function createCategory(
     });
 }
 
+export interface DeleteCategoryRequestBody {
+    name: string;
+}
+
+export interface DeleteCategoryResponseBody {}
+
+export function deleteCategory(
+    params: DeleteCategoryRequestBody
+): Promise<RequestResponse<DeleteCategoryResponseBody>> {
+    return request('http://localhost:3300/deleteCategory', {
+        method: 'POST',
+        data: params
+    });
+}
+
 export interface GetCategoryListRequestBody {
     user: IUser['_id'];
 }

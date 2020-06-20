@@ -50,6 +50,7 @@ module.exports = {
         ],
         'no-useless-escape': 'off',
         'no-var': 'error',
+        'react/no-access-state-in-setstate': 'off',
         'require-await': 'error',
         'simple-import-sort/sort': 'error'
     }

@@ -126,6 +126,12 @@ export default {
                             component: './article'
                         },
                         {
+                            path: '/categories',
+                            name: 'categories',
+                            icon: 'folder-open',
+                            component: './category'
+                        },
+                        {
                             component: './404'
                         }
                     ]

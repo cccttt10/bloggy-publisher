@@ -68,3 +68,30 @@ export function updateArticle(
         data: params
     });
 }
+
+export interface QueryArticleListRequestBody {
+    _id: IUser['_id']; // author id
+    filter?: {
+        isAboutPage: IArticle['isAboutPage'];
+        isDraft?: IArticle['isDraft'];
+        keyword?: IArticle['title'] | IArticle['description']; // search in article title and description for the keyword
+    };
+    pagination?: {
+        limit: number;
+        offset: number;
+    };
+}
+
+export interface QueryArticleListResponseBody {
+    count: number;
+    articleList: IArticle[];
+}
+
+export function queryArticleList(
+    params: QueryArticleListRequestBody
+): Promise<RequestResponse<UpdateArticleResponseBody>> {
+    return request('http://localhost:3300/queryArticleList', {
+        method: 'POST',
+        data: params
+    });
+}

@@ -92,7 +92,8 @@ const categoryModel: CategoryModelType = {
                 createCategory,
                 payload
             )) as RequestResponse<CreateCategoryResponseBody>;
-            if (response?.response.ok === true) {
+            console.log(response);
+            if (response?.response?.ok === true) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
@@ -103,6 +104,7 @@ const categoryModel: CategoryModelType = {
             if (typeof callback === 'function') {
                 callback(false);
             }
+            console.log('end of effect');
         },
 
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -121,7 +123,7 @@ const categoryModel: CategoryModelType = {
                 deleteCategory,
                 payload
             )) as RequestResponse<DeleteCategoryResponseBody>;
-            if (response?.response.ok === true) {
+            if (response?.response?.ok === true) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });
@@ -143,9 +145,10 @@ const categoryModel: CategoryModelType = {
                 getCategoryList,
                 payload
             )) as RequestResponse<GetCategoryListResponseBody>;
-            const getCategoryListResponseBody: GetCategoryListResponseBody =
-                response.data;
-            if (getCategoryListResponseBody) {
+
+            if (response?.response?.ok === true) {
+                const getCategoryListResponseBody: GetCategoryListResponseBody =
+                    response.data;
                 yield put({
                     type: 'saveCategoryList',
                     payload: getCategoryListResponseBody.categoryList as ICategory[]

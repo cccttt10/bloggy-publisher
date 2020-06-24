@@ -225,7 +225,7 @@ const ArticleModel: ArticleModelType = {
                 payload
             )) as RequestResponse<DeleteArticleResponseBody>;
 
-            if (response?.response.ok === true) {
+            if (response?.response?.ok === true) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
                 });

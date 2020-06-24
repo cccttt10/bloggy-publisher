@@ -19,6 +19,7 @@ import {
     CreateArticleRequestBody,
     UpdateArticleRequestBody
 } from '@/services/article';
+import { GetCategoryListRequestBody } from '@/services/category';
 
 import { Mode } from './index';
 
@@ -39,6 +40,7 @@ interface ArticleDetailState {
 
 class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailState> {
     componentDidMount(): void {
+        this.fetchCategoryList();
         const editor: SimpleMDE = new SimpleMDE({
             element: document.getElementById('editor') as HTMLElement,
             autofocus: true,
@@ -58,6 +60,15 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
         this.state = { editor };
         this.populateForm();
     }
+
+    fetchCategoryList = (): void => {
+        this.props.dispatch({
+            type: 'category/getCategoryList',
+            payload: {
+                user: this.props.userId
+            } as GetCategoryListRequestBody
+        });
+    };
 
     handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
@@ -242,5 +253,5 @@ const EnhancedForm = Form.create<ArticleDetailProps>()(ArticleDetail);
 export default connect(({ category, user, loading }: ConnectState) => ({
     categoryList: category.categoryList,
     userId: user.currentUser._id,
-    loading: loading.models.article && loading.models.user
+    loading: loading.models.article && loading.models.user && loading.models.category
 }))(EnhancedForm);

@@ -6,6 +6,7 @@ import request from '@/utils/request';
 export interface RegisterRequestBody {
     email: string;
     password: string;
+    confirmPassword: string;
     name: string;
     phone: string;
 }

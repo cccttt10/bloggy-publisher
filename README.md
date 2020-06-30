@@ -1,6 +1,6 @@
 # Bloggy Publisher
 
-[![Build Status](https://travis-ci.com/chuntonggao/bloggy-publisher.svg?branch=master)](https://travis-ci.com/chuntonggao/bloggy-publisher)
+[![Build Status](https://travis-ci.com/chuntonggao/bloggy-publisher.svg?branch=master)](https://travis-ci.com/chuntonggao/bloggy-publisher) [![Netlify Status](https://api.netlify.com/api/v1/badges/484387e7-df5c-46cd-9ba7-49249620cc08/deploy-status)](https://app.netlify.com/sites/bloggy-publisher/deploys)
 
 This repo contains the front-end code for Bloggy's publisher UI.
 

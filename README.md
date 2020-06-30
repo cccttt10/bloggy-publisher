@@ -1,5 +1,7 @@
 # Bloggy Publisher
 
+[![Build Status](https://travis-ci.com/chuntonggao/bloggy-publisher.svg?branch=master)](https://travis-ci.com/chuntonggao/bloggy-publisher)
+
 This repo contains the front-end code for Bloggy's publisher UI.
 
 -   [Project Overview](https://github.com/chuntonggao/bloggy.git)

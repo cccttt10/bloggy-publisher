@@ -5,6 +5,8 @@ import { ICategory } from '@/models/category';
 import { IUser } from '@/models/user';
 import request from '@/utils/request';
 
+import API_URL from './apiUrl';
+
 export interface CreateArticleRequestBody {
     title: string;
     description: string;
@@ -20,7 +22,7 @@ export type CreateArticleResponseBody = IArticle;
 export function createArticle(
     params: CreateArticleRequestBody
 ): Promise<RequestResponse<CreateArticleResponseBody>> {
-    return request('http://localhost:3300/createArticle', {
+    return request(`${API_URL}/createArticle`, {
         method: 'POST',
         data: params
     });
@@ -39,7 +41,7 @@ export interface GetArticleListResponseBody {
 export function getArticleList(
     params: GetArticleListRequestBody
 ): Promise<RequestResponse<GetArticleListResponseBody>> {
-    return request('http://localhost:3300/getArticleList', {
+    return request(`${API_URL}/getArticleList`, {
         method: 'POST',
         data: params
     });
@@ -63,7 +65,7 @@ export type UpdateArticleResponseBody = IArticle;
 export function updateArticle(
     params: UpdateArticleRequestBody
 ): Promise<RequestResponse<UpdateArticleResponseBody>> {
-    return request('http://localhost:3300/updateArticle', {
+    return request(`${API_URL}/updateArticle`, {
         method: 'POST',
         data: params
     });
@@ -78,7 +80,7 @@ export interface DeleteArticleResponseBody {}
 export function deleteArticle(
     params: DeleteArticleRequestBody
 ): Promise<RequestResponse<DeleteArticleResponseBody>> {
-    return request('http://localhost:3300/deleteArticle', {
+    return request(`${API_URL}/deleteArticle`, {
         method: 'POST',
         data: params
     });

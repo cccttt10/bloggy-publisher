@@ -4,6 +4,8 @@ import { ICategory } from '@/models/category';
 import { IUser } from '@/models/user';
 import request from '@/utils/request';
 
+import API_URL from './apiUrl';
+
 export interface CreateCategoryRequestBody {
     name: string;
     description: string;
@@ -14,7 +16,7 @@ export type CreateCategoryResponseBody = ICategory;
 export function createCategory(
     params: CreateCategoryRequestBody
 ): Promise<RequestResponse<CreateCategoryResponseBody>> {
-    return request('http://localhost:3300/createCategory', {
+    return request(`${API_URL}/createCategory`, {
         method: 'POST',
         data: params
     });
@@ -29,7 +31,7 @@ export interface DeleteCategoryResponseBody {}
 export function deleteCategory(
     params: DeleteCategoryRequestBody
 ): Promise<RequestResponse<DeleteCategoryResponseBody>> {
-    return request('http://localhost:3300/deleteCategory', {
+    return request(`${API_URL}/deleteCategory`, {
         method: 'POST',
         data: params
     });
@@ -47,7 +49,7 @@ export interface GetCategoryListResponseBody {
 export function getCategoryList(
     params: GetCategoryListRequestBody
 ): Promise<RequestResponse<GetCategoryListResponseBody>> {
-    return request('http://localhost:3300/getCategoryList', {
+    return request(`${API_URL}/getCategoryList`, {
         method: 'POST',
         data: params
     });

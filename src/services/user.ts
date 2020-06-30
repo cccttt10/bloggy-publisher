@@ -3,6 +3,8 @@ import { RequestResponse } from 'umi-request';
 import { IUser } from '@/models/user';
 import request from '@/utils/request';
 
+import API_URL from './apiUrl';
+
 export interface GetCurrentUserResponseBody {
     user: IUser;
 }
@@ -10,7 +12,7 @@ export interface GetCurrentUserResponseBody {
 export function getCurrentUser(): Promise<
     RequestResponse<GetCurrentUserResponseBody>
 > {
-    return request('http://localhost:3300/getCurrentUser', { method: 'GET' });
+    return request(`${API_URL}/getCurrentUser`, { method: 'GET' });
 }
 
 export interface UpdateUserRequestBody {
@@ -33,7 +35,7 @@ export interface UpdateUserResponseBody {
 export function updateUser(
     params: UpdateUserRequestBody
 ): Promise<RequestResponse<UpdateUserResponseBody>> {
-    return request('http://localhost:3300/updateUser', {
+    return request(`${API_URL}/updateUser`, {
         method: 'POST',
         data: params
     });

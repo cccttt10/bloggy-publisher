@@ -3,6 +3,8 @@ import { RequestResponse } from 'umi-request';
 import { IUser } from '@/models/user';
 import request from '@/utils/request';
 
+import API_URL from './apiUrl';
+
 export interface RegisterRequestBody {
     email: string;
     password: string;
@@ -18,7 +20,7 @@ export interface RegisterResponseBody {
 export function register(
     params: RegisterRequestBody
 ): Promise<RequestResponse<RegisterResponseBody>> {
-    return request('http://localhost:3300/register', {
+    return request(`${API_URL}/register`, {
         method: 'POST',
         data: params
     });
@@ -36,7 +38,7 @@ export interface LoginResponseBody {
 export function login(
     params: LoginRequestBody
 ): Promise<RequestResponse<LoginResponseBody>> {
-    return request('http://localhost:3300/login', {
+    return request(`${API_URL}/login`, {
         method: 'POST',
         data: params
     });

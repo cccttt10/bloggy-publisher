@@ -110,7 +110,7 @@ class AccountForm extends Component<AccountFormProps> {
                     {getFieldDecorator('phone', {
                         rules: [
                             {
-                                pattern: /^\d+/,
+                                pattern: /^\d+$/,
                                 message: formatMessage({
                                     id: 'account.phone.wrong-format'
                                 })

@@ -109,7 +109,7 @@ const map: {
         },
         rules: [
             {
-                pattern: /^\d+/,
+                pattern: /^\d+$/,
                 message: formatMessage({
                     id: 'user-login.register.phone.wrong-format'
                 })

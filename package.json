@@ -5,7 +5,7 @@
     "description": "西湖区最具影响力的博客平台",
     "scripts": {
         "analyze": "cross-env ANALYZE=1 umi build",
-        "build": "umi build",
+        "build": "cross-env CI='' umi build",
         "deploy": "npm run site && npm run gh-pages",
         "fetch:blocks": "pro fetch-blocks && npm run prettier",
         "gh-pages": "cp CNAME ./dist/ && gh-pages -d dist",

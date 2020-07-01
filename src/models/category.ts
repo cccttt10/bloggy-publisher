@@ -92,7 +92,6 @@ const categoryModel: CategoryModelType = {
                 createCategory,
                 payload
             )) as RequestResponse<CreateCategoryResponseBody>;
-            console.log(response);
             if (response?.response?.ok === true) {
                 notification.success({
                     message: formatMessage({ id: 'app.request.requestSuccess' })
@@ -104,7 +103,6 @@ const categoryModel: CategoryModelType = {
             if (typeof callback === 'function') {
                 callback(false);
             }
-            console.log('end of effect');
         },
 
         // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

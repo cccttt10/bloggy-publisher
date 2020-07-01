@@ -31,8 +31,6 @@ const errorHandler = (error: {
     response: Response;
     data: string | object;
 }): Response => {
-    console.log(process.env);
-    console.log(process.env.REACT_APP_ENV);
     const { response, data } = error;
     const errorMessage: string = data as string;
     if (response && response.status) {

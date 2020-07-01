@@ -6,14 +6,18 @@ export default {
     'account.bio.placeholder': '这个人很懒，什么也没留下。',
     'account.change-avatar': '更换头像',
     'account.change-background': '更换背景图',
+    'account.confirm-password': '确认密码',
+    'account.copy-success': '复制成功',
+    'account.copy-url': '复制',
     'account.email': '邮箱',
     'account.imgUrl': '背景图地址',
     'account.location': '所在地',
     'account.name': '姓名',
     'account.name.required': '姓名不能为空哦。',
+    'account.open-url': '打开',
+    'account.password': '密码',
     'account.phone': '手机号',
     'account.phone.wrong-format': '手机号格式有点问题呢。',
-    'account.password': '密码',
-    'account.confirm-password': '确认密码',
-    'account.update': '更新信息'
+    'account.update': '更新信息',
+    'account.url': '博客地址'
 };

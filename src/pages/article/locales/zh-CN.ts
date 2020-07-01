@@ -1,4 +1,5 @@
 export default {
+    'article.about': '关于页',
     'article.all': '全部',
     'article.backgroundImage': '背景图',
     'article.categories': '分类标签',

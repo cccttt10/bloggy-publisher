@@ -1,4 +1,5 @@
 export default {
+    'article.about': 'About me',
     'article.all': 'All',
     'article.backgroundImage': 'Background',
     'article.categories': 'Categories',

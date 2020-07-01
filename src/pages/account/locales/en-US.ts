@@ -1,19 +1,23 @@
 export default {
     'account.avatar': 'Avatar URL',
     'account.avatar-title': 'Avatar',
-    'account.background-title': 'background image',
+    'account.background-title': 'Background Image',
     'account.bio': 'Bio',
     'account.bio.placeholder': 'This person is too lazy to write a bio.',
     'account.change-avatar': 'Change Avatar',
     'account.change-background': 'Change background',
     'account.confirm-password': 'Confirm password',
+    'account.copy-success': 'Copied',
+    'account.copy-url': 'Copy',
     'account.email': 'Email',
     'account.imgUrl': 'Background image URL',
     'account.location': 'Location',
     'account.name': 'Name',
     'account.name.required': 'Please enter your name.',
+    'account.open-url': 'Open',
     'account.password': 'Password',
     'account.phone': 'Phone',
     'account.phone.wrong-format': 'Invalid phone number.',
-    'account.update': 'Update Info'
+    'account.update': 'Update Info',
+    'account.url': 'URL'
 };

@@ -131,20 +131,28 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 {
                     title: formatMessage({ id: 'article.state' }),
                     dataIndex: 'isDraft',
-                    render: (isDraft: IArticle['isDraft']): JSX.Element => {
-                        if (isDraft) {
-                            return (
-                                <Tag color="red">
-                                    <FormattedMessage id="article.draft" />
-                                </Tag>
-                            );
-                        } else {
-                            return (
-                                <Tag color="green">
-                                    <FormattedMessage id="article.public" />
-                                </Tag>
-                            );
-                        }
+                    render: (
+                        isDraft: IArticle['isDraft'],
+                        record: IArticle
+                    ): JSX.Element => {
+                        return (
+                            <React.Fragment>
+                                {record.isAboutPage && (
+                                    <Tag color="blue">
+                                        <FormattedMessage id="article.about" />
+                                    </Tag>
+                                )}
+                                {isDraft ? (
+                                    <Tag color="red">
+                                        <FormattedMessage id="article.draft" />
+                                    </Tag>
+                                ) : (
+                                    <Tag color="green">
+                                        <FormattedMessage id="article.public" />
+                                    </Tag>
+                                )}
+                            </React.Fragment>
+                        );
                     }
                 },
                 {

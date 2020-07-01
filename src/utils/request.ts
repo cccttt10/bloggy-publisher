@@ -31,22 +31,36 @@ const errorHandler = (error: {
     response: Response;
     data: string | object;
 }): Response => {
+    console.log(process.env);
+    console.log(process.env.REACT_APP_ENV);
     const { response, data } = error;
     const errorMessage: string = data as string;
     if (response && response.status) {
         const errorText = errorMessage || codeMessage[response.status];
         const { status, url } = response;
-        notification.error({
-            message: `${formatMessage({
-                id: 'app.request.requestError'
-            })} ${status}: ${url}`,
-            description: errorText
-        });
+        if (process.env.NODE_ENV === 'development') {
+            notification.error({
+                message: `${formatMessage({
+                    id: 'app.request.requestError'
+                })} ${status}: ${url}`,
+                description: errorText
+            });
+        } else {
+            notification.error({
+                message: errorText
+            });
+        }
     } else if (!response) {
-        notification.error({
-            description: formatMessage({ id: 'app.request.networkErrorLong' }),
-            message: formatMessage({ id: 'app.request.networkErrorShort' })
-        });
+        if (process.env.NODE_ENV === 'development') {
+            notification.error({
+                description: formatMessage({ id: 'app.request.networkErrorLong' }),
+                message: formatMessage({ id: 'app.request.networkErrorShort' })
+            });
+        } else {
+            notification.error({
+                message: formatMessage({ id: 'app.request.networkErrorShort' })
+            });
+        }
     }
     return response;
 };

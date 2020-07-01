@@ -81,6 +81,7 @@ const UserModel: UserModelType = {
                     payload: getCurrentUserResponseBody.user as IUser
                 });
             } else {
+                console.log('will remove cookie');
                 cookieChecker.remove('jwt');
             }
         },

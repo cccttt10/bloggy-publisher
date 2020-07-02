@@ -39,8 +39,11 @@ interface ArticleDetailState {
 }
 
 class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailState> {
-    componentDidMount(): void {
+    componentWillMount(): void {
         this.fetchCategoryList();
+    }
+
+    componentDidMount(): void {
         const editor: SimpleMDE = new SimpleMDE({
             element: document.getElementById('editor') as HTMLElement,
             autofocus: true,
@@ -111,7 +114,7 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
             imgUrl: article.imgUrl,
             isDraft: article.isDraft,
             isAboutPage: article.isAboutPage,
-            categories: article.categories
+            categories: article.categories.map(category => category._id)
         });
     };
 

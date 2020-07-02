@@ -1,1 +1,6 @@
-export const BLOGGY_READER_BASE_URL = 'https://bloggy-reader.netlify.app/publisher';
+/* eslint-disable import/no-mutable-exports */
+let BLOGGY_READER_BASE_URL = 'https://bloggy-reader.netlify.app/publisher';
+if (process.env.NODE_ENV === 'development') {
+    BLOGGY_READER_BASE_URL = 'http://localhost:2000/publisher';
+}
+export default { BLOGGY_READER_BASE_URL };

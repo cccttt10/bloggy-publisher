@@ -5,7 +5,7 @@ import { formatMessage, FormattedMessage } from 'umi-plugin-react/locale';
 
 import { ConnectState } from '@/models/connect';
 import { IUser } from '@/models/user';
-import { BLOGGY_READER_BASE_URL } from '@/utils/constants';
+import constants from '@/utils/constants';
 
 import AccountForm from './AccountForm';
 import styles from './index.less';
@@ -75,7 +75,7 @@ class BaseView extends Component<BaseViewProps> {
     }
 
     render(): JSX.Element {
-        const url = `${BLOGGY_READER_BASE_URL}/${this.props.currentUser._id}`;
+        const url = `${constants.BLOGGY_READER_BASE_URL}/${this.props.currentUser._id}`;
 
         return (
             <div className={styles.baseView}>

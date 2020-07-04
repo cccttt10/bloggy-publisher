@@ -60,7 +60,9 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
                 })
         });
         editor.value(this.props.article.content);
-        this.state = { editor };
+        this.setState({ ...this.state, editor });
+        console.log('in did mount');
+        console.log(this.state);
         this.populateForm();
     }
 
@@ -75,12 +77,16 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
 
     handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault();
+        const content = this.state.editor.value();
         this.props.form.validateFields({ force: true }, (err, values) => {
             if (!err) {
                 if (this.props.type === 'create') {
                     this.props.dispatch({
                         type: 'article/createArticle',
-                        payload: values as CreateArticleRequestBody,
+                        payload: {
+                            ...values,
+                            content
+                        } as CreateArticleRequestBody,
                         callback: (success: boolean): void => {
                             if (success === true) {
                                 this.props.setParentMode('list');
@@ -92,7 +98,10 @@ class ArticleDetail extends React.Component<ArticleDetailProps, ArticleDetailSta
                         type: 'article/updateArticle',
                         payload: {
                             _id: this.props.article._id,
-                            updatedFields: values
+                            updatedFields: {
+                                ...values,
+                                content
+                            }
                         } as UpdateArticleRequestBody,
                         callback: (success: boolean): void => {
                             if (success === true) {

@@ -1,4 +1,5 @@
-import { Avatar, Card, Divider, notification, Popconfirm, Table, Tag } from 'antd';
+/* eslint-disable max-lines */
+import { Avatar, Card, Divider, Popconfirm, Table, Tag } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 import React, { Fragment } from 'react';
@@ -12,6 +13,7 @@ import {
     DeleteArticleRequestBody,
     GetArticleListRequestBody
 } from '@/services/article';
+import constants from '@/utils/constants';
 
 import ArticleDetail from './ArticleDetail';
 import ArticleListToolbar from './ArticleListToolbar';
@@ -61,9 +63,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
     };
 
     showComments = (record: IArticle): void => {
-        notification.info({
-            message: formatMessage({ id: 'article.not-implemented' })
-        });
         this.setState({ showComments: true, selectedArticle: record });
     };
 
@@ -95,7 +94,6 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
 
     render(): JSX.Element {
         const { loading, articleList } = this.props;
-        console.log(articleList);
         const { mode, selectedArticle } = this.state;
         if (mode === 'create') {
             return (
@@ -216,7 +214,7 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                             <Divider type="vertical" />
                             <Fragment>
                                 <a
-                                    href="#"
+                                    href={`${constants.BLOGGY_READER_BASE_URL}/articleDetail/?articleId=${record._id}`}
                                     // eslint-disable-next-line react/jsx-no-target-blank
                                     target="_blank"
                                 >

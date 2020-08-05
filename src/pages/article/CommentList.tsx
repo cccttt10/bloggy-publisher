@@ -1,6 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { DeleteOutlined } from '@ant-design/icons';
-import { Modal, Tag, Tooltip } from 'antd';
+import { Button, Modal, Tag, Tooltip } from 'antd';
 import { connect } from 'dva';
 import React, { Component } from 'react';
 import { AnyAction, Dispatch } from 'redux';
@@ -20,6 +19,7 @@ interface CommentListProps {
     articleId: IArticle['_id'];
     dispatch: Dispatch<AnyAction>;
     hideComments: () => void;
+    loading?: boolean;
 }
 
 interface CommentListState {
@@ -80,30 +80,56 @@ class CommentList extends Component<CommentListProps, CommentListState> {
         const { commentList } = this.state;
         const commentsJSX: JSX.Element[] = [];
         for (const comment of commentList) {
-            const actions = [
-                comment.isApproved ? (
-                    <Tag color="green">
-                        {formatMessage({ id: 'article.comment.approved' })}
-                    </Tag>
-                ) : (
-                    <Tag color="red">
-                        {formatMessage({ id: 'article.comment.pending' })}
-                    </Tag>
-                ),
-                !comment.isApproved ? (
-                    <span onClick={(): void => this.approveComment(comment._id)}>
-                        {' '}
-                        {formatMessage({ id: 'article.comment.approve' })}
-                    </span>
-                ) : (
-                    <span> </span>
-                ),
+            const actions = [];
+            if (comment.isApproved) {
+                actions.push(
+                    <React.Fragment>
+                        <Tag color="green">
+                            {formatMessage({ id: 'article.comment.approved' })}
+                        </Tag>
+                        <br />
+                    </React.Fragment>
+                );
+            } else {
+                actions.push(
+                    <React.Fragment>
+                        <Tag color="red">
+                            {formatMessage({ id: 'article.comment.pending' })}
+                        </Tag>
+                        <br />
+                    </React.Fragment>
+                );
+            }
+            if (!comment.isApproved) {
+                actions.push(
+                    <Tooltip
+                        title={formatMessage({ id: 'article.comment.approve' })}
+                    >
+                        <Button
+                            onClick={(): void => this.approveComment(comment._id)}
+                            loading={this.props.loading}
+                            type="primary"
+                            shape="circle"
+                            icon="check"
+                            size="small"
+                            style={{ marginRight: '6px' }}
+                        />
+                    </Tooltip>
+                );
+            }
+            actions.push(
                 <Tooltip title={formatMessage({ id: 'article.comment.delete' })}>
-                    <span onClick={(): void => this.deleteComment(comment._id)}>
-                        {React.createElement(DeleteOutlined)}
-                    </span>
+                    <Button
+                        onClick={(): void => this.deleteComment(comment._id)}
+                        loading={this.props.loading}
+                        type="danger"
+                        shape="circle"
+                        icon="delete"
+                        size="small"
+                    />
                 </Tooltip>
-            ];
+            );
+
             commentsJSX.push(<CustomComment comment={comment} actions={actions} />);
         }
         return (

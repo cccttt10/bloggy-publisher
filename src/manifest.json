@@ -7,15 +7,15 @@
     "background_color": "#001529",
     "icons": [
         {
-            "src": "icons/icon-192x192.png",
+            "src": "icons/logo-1x.png",
             "sizes": "192x192"
         },
         {
-            "src": "icons/icon-128x128.png",
+            "src": "icons/logo-0.75x.png",
             "sizes": "128x128"
         },
         {
-            "src": "icons/icon-512x512.png",
+            "src": "icons/logo-2x.png",
             "sizes": "512x512"
         }
     ]

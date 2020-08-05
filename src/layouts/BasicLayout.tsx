@@ -19,7 +19,7 @@ import { ConnectState } from '@/models/connect';
 import Authorized from '@/utils/Authorized';
 import { getAuthorityFromRouter, isAntDesignPro } from '@/utils/utils';
 
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 const noMatch = (
     <Result

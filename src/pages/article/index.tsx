@@ -214,7 +214,8 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                             <Divider type="vertical" />
                             <Fragment>
                                 <a
-                                    href={`${constants.BLOGGY_READER_BASE_URL}/articleDetail/?articleId=${record._id}`}
+                                    // https://bloggy2020.herokuapp.com/reader/#/publisher/5f2ac0117fe9bc0084a81033/articleDetail/?articleId=5f2ac02f7fe9bc0084a81034
+                                    href={`${constants.BLOGGY_READER_BASE_URL}/${this.props.userId}/articleDetail/?articleId=${record._id}`}
                                     // eslint-disable-next-line react/jsx-no-target-blank
                                     target="_blank"
                                 >

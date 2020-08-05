@@ -33,25 +33,26 @@ const AvatarView: FC<AvatarViewProps> = (props: AvatarViewProps) => (
     </Fragment>
 );
 
-interface BackgroundViewProps {
-    backgroundUrl: string;
-}
-const BackgroundView: FC<BackgroundViewProps> = (props: BackgroundViewProps) => (
-    <Fragment>
-        <div className={styles.background_title}>
-            <FormattedMessage id="account.background-title" />
-        </div>
-        <div className={styles.background}>
-            <img src={props.backgroundUrl} alt="background" />
-        </div>
+// interface BackgroundViewProps {
+//     backgroundUrl: string;
+// }
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+// const BackgroundView: FC<BackgroundViewProps> = (props: BackgroundViewProps) => (
+//     <Fragment>
+//         <div className={styles.background_title}>
+//             <FormattedMessage id="account.background-title" />
+//         </div>
+//         <div className={styles.background}>
+//             <img src={props.backgroundUrl} alt="background" />
+//         </div>
 
-        <div className={styles.button_view}>
-            <Button icon="upload">
-                <FormattedMessage id="account.change-background" />
-            </Button>
-        </div>
-    </Fragment>
-);
+//         <div className={styles.button_view}>
+//             <Button icon="upload">
+//                 <FormattedMessage id="account.change-background" />
+//             </Button>
+//         </div>
+//     </Fragment>
+// );
 
 interface BaseViewProps {
     currentUser: IUser;
@@ -84,7 +85,7 @@ class BaseView extends Component<BaseViewProps> {
                 </div>
                 <div className={styles.right}>
                     <AvatarView avatarUrl={this.getAvatarURL()} />
-                    <BackgroundView backgroundUrl={this.getBackgroundURL()} />
+                    {/* <BackgroundView backgroundUrl={this.getBackgroundURL()} /> */}
 
                     <div className={styles.url}>
                         <Form.Item label={formatMessage({ id: 'account.url' })}>

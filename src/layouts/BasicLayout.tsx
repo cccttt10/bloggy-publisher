@@ -17,6 +17,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import { ConnectState } from '@/models/connect';
 import Authorized from '@/utils/Authorized';
+import constants from '@/utils/constants';
 import { getAuthorityFromRouter, isAntDesignPro } from '@/utils/utils';
 
 import logo from '../assets/logo.png';
@@ -67,21 +68,21 @@ const defaultFooterDom = (
         copyright={formatMessage({ id: 'app.footer.copyright' })}
         links={[
             {
-                key: 'Bloggy Publisher',
-                title: 'Bloggy Publisher',
-                href: '#',
-                blankTarget: true
-            },
-            {
-                key: 'github',
+                key: 'GitHub',
                 title: <Icon type="github" />,
                 href: 'https://github.com/chuntonggao/bloggy',
                 blankTarget: true
             },
             {
-                key: 'Bloggy Reader',
-                title: 'Bloggy Reader',
-                href: '#',
+                key: 'Bloggy Publisher',
+                title: 'Bloggy Publisher',
+                href: constants.BLOGGY_PUBLISHER_BASE_URL,
+                blankTarget: true
+            },
+            {
+                key: 'Bugs & Feedback',
+                title: <Icon type="bug" />,
+                href: 'https://github.com/chuntonggao/bloggy/issues/new',
                 blankTarget: true
             }
         ]}

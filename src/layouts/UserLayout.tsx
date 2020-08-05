@@ -13,6 +13,7 @@ import { formatMessage } from 'umi-plugin-react/locale';
 
 import SelectLang from '@/components/SelectLang';
 import { ConnectProps, ConnectState } from '@/models/connect';
+import constants from '@/utils/constants';
 
 import logo from '../assets/logo.png';
 import styles from './UserLayout.less';
@@ -70,21 +71,21 @@ const UserLayout: React.FC<UserLayoutProps> = props => {
                     copyright={formatMessage({ id: 'app.footer.copyright' })}
                     links={[
                         {
-                            key: 'Bloggy Publisher',
-                            title: 'Bloggy Publisher',
-                            href: '#',
-                            blankTarget: true
-                        },
-                        {
-                            key: 'github',
+                            key: 'GitHub',
                             title: <Icon type="github" />,
                             href: 'https://github.com/chuntonggao/bloggy',
                             blankTarget: true
                         },
                         {
-                            key: 'Bloggy Reader',
-                            title: 'Bloggy Reader',
-                            href: '#',
+                            key: 'Bloggy Publisher',
+                            title: 'Bloggy Publisher',
+                            href: constants.BLOGGY_PUBLISHER_BASE_URL,
+                            blankTarget: true
+                        },
+                        {
+                            key: 'Bugs & Feedback',
+                            title: <Icon type="bug" />,
+                            href: 'https://github.com/chuntonggao/bloggy/issues/new',
                             blankTarget: true
                         }
                     ]}

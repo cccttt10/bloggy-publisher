@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { notification } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import { RequestResponse } from 'umi-request';
@@ -17,6 +18,17 @@ import {
     UpdateArticleRequestBody,
     UpdateArticleResponseBody
 } from '@/services/article';
+import {
+    approveComment,
+    ApproveCommentRequestBody,
+    ApproveCommentResponseBody,
+    deleteComment,
+    DeleteCommentRequestBody,
+    DeleteCommentResponseBody,
+    getCommentList,
+    GetCommentListRequestBody,
+    GetCommentListResponseBody
+} from '@/services/comment';
 
 import { ICategory } from './category';
 import { IUser } from './user';
@@ -41,6 +53,20 @@ export interface IArticle {
     createdOn: Date;
     updatedOn: Date;
     _id: string;
+}
+
+export interface IComment {
+    _id: string;
+    article: IArticle['_id'] | IArticle;
+    content: string;
+    isPinned?: boolean;
+    user: IUser['_id'] | IUser;
+    isApproved?: boolean;
+    createdOn?: Date;
+}
+
+export interface VerboseComment extends Omit<IComment, 'user'> {
+    user: IUser;
 }
 
 export const emptyArticle: IArticle = {
@@ -107,6 +133,39 @@ export interface ArticleModelType {
                 type: string;
                 payload: DeleteArticleRequestBody;
                 callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) => Generator;
+        approveComment: (
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: ApproveCommentRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) => Generator;
+        deleteComment: (
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteCommentRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) => Generator;
+        getCommentList: (
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: GetCommentListRequestBody;
+                callback: (success: boolean, commentList?: VerboseComment[]) => void;
             },
             { call }: { call: Function }
         ) => Generator;
@@ -231,6 +290,92 @@ const ArticleModel: ArticleModelType = {
                 });
                 if (typeof callback === 'function') {
                     callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *approveComment(
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: ApproveCommentRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<ApproveCommentResponseBody> = (yield call(
+                approveComment,
+                payload
+            )) as RequestResponse<ApproveCommentResponseBody>;
+
+            if (response?.response?.ok === true) {
+                notification.success({
+                    message: formatMessage({ id: 'app.request.requestSuccess' })
+                });
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *deleteComment(
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: DeleteCommentRequestBody;
+                callback: (success: boolean) => void;
+            },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<DeleteCommentResponseBody> = (yield call(
+                deleteComment,
+                payload
+            )) as RequestResponse<DeleteCommentResponseBody>;
+
+            if (response?.response?.ok === true) {
+                notification.success({
+                    message: formatMessage({ id: 'app.request.requestSuccess' })
+                });
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            }
+            if (typeof callback === 'function') {
+                callback(false);
+            }
+        },
+
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+        *getCommentList(
+            {
+                payload,
+                callback
+            }: {
+                type: string;
+                payload: GetCommentListRequestBody;
+                callback: (success: boolean, commentList?: VerboseComment[]) => void;
+            },
+            { call }: { call: Function }
+        ) {
+            const response: RequestResponse<GetCommentListResponseBody> = (yield call(
+                getCommentList,
+                payload
+            )) as RequestResponse<GetCommentListResponseBody>;
+            if (response?.response?.ok === true) {
+                if (typeof callback === 'function') {
+                    callback(true, response?.data.commentList);
                 }
             }
             if (typeof callback === 'function') {

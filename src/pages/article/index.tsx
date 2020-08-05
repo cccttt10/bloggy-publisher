@@ -15,6 +15,7 @@ import {
 
 import ArticleDetail from './ArticleDetail';
 import ArticleListToolbar from './ArticleListToolbar';
+import CommentList from './CommentList';
 
 interface ArticleListProps {
     loading?: boolean;
@@ -28,10 +29,15 @@ export type Mode = 'list' | 'create' | 'edit';
 interface ArticleListState {
     mode: Mode;
     selectedArticle: IArticle;
+    showComments: boolean;
 }
 
 class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
-    state = { mode: 'list' as Mode, selectedArticle: emptyArticle };
+    state = {
+        mode: 'list' as Mode,
+        selectedArticle: emptyArticle,
+        showComments: false
+    };
 
     componentDidMount(): void {
         this.fetchArticleList();
@@ -54,10 +60,15 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
         }
     };
 
-    showComments = (): void => {
+    showComments = (record: IArticle): void => {
         notification.info({
             message: formatMessage({ id: 'article.not-implemented' })
         });
+        this.setState({ showComments: true, selectedArticle: record });
+    };
+
+    hideComments = (): void => {
+        this.setState({ showComments: false });
     };
 
     handleDelete = (articleId: IArticle['_id']): void => {
@@ -84,6 +95,7 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
 
     render(): JSX.Element {
         const { loading, articleList } = this.props;
+        console.log(articleList);
         const { mode, selectedArticle } = this.state;
         if (mode === 'create') {
             return (
@@ -197,7 +209,7 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                             </Fragment>
                             <Divider type="vertical" />
                             <Fragment>
-                                <a onClick={this.showComments}>
+                                <a onClick={(): void => this.showComments(record)}>
                                     <FormattedMessage id="article.comments" />
                                 </a>
                             </Fragment>
@@ -231,6 +243,12 @@ class ArticleList extends React.Component<ArticleListProps, ArticleListState> {
                 <Card bordered={false}>
                     <div className="">
                         <ArticleListToolbar setParentMode={this.setMode} />
+                        {this.state.showComments && (
+                            <CommentList
+                                articleId={this.state.selectedArticle._id}
+                                hideComments={this.hideComments}
+                            />
+                        )}
                         <Table
                             size="middle"
                             loading={loading}

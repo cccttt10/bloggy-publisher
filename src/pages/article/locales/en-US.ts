@@ -4,6 +4,12 @@ export default {
     'article.backgroundImage': 'Background',
     'article.categories': 'Categories',
     'article.category': 'Categories',
+    'article.comment.approve': 'Approve',
+    'article.comment.approved': 'Approved',
+    'article.comment.delete': 'Delete',
+    'article.comment.manage-comments': 'Manage Comments',
+    'article.comment.no-comments': 'No comments yet.',
+    'article.comment.pending': 'Pending',
     'article.comments': 'Comments',
     'article.confirm-delete':
         'Are you sure you want to delete? Deletion is permanent.',
